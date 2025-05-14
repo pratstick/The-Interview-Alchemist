@@ -44,7 +44,7 @@ const Modal = ({
         </button>
 
         {/* Modal Body (scrollable) */}
-        <div className='flex-1 overflow-y-auto custom-scrollbar'>
+        <div className='flex-1 overflow-y-auto custom-scrollbar '>
           {children}
         </div>
       </div>
