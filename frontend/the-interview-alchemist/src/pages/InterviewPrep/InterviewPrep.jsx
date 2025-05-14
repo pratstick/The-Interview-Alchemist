@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const InterviewPrep = () => {
   return (
     <div>InterviewPrep</div>
-  )
+  );
 }
 
-export default InterviewPrep
+export default InterviewPrep;
