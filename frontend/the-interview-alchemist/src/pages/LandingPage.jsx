@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { LuSparkles } from 'react-icons/lu';
 import Login from './Auth/Login';
 import SignUp from './Auth/SignUp';
+import Modal from '../components/Modal';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,11 @@ const LandingPage = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
-  const handleCTA = () => {};
+  const handleCTA = () => {
+    setOpenAuthModal(true);
+    setCurrentPage("signup");
+  };
+
   return (
     <>
       <div className="w-full min-h-full bg-[#FFFCEF]">
@@ -21,7 +26,10 @@ const LandingPage = () => {
         <div className='container mx-auto px-4 pt-6 pb-[200px] relative z-10'>
           <header className='flex justify-between items-center mb-16'>
             <div className='text-xl text-black font-bold'>The Interview Alchemist</div>
-            <button className='bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white border border-white transition-colors cursor-pointer' onClick={() => setOpenAuthModal(true)}>
+            <button 
+              className='bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white border border-white transition-colors cursor-pointer' 
+              onClick={() => setOpenAuthModal(true)}
+            >
               Login/SignUp
             </button>
           </header>
@@ -48,7 +56,12 @@ const LandingPage = () => {
               Get role-specific questions, expand concepts when you're ready, master fundamentals, and track your growth—
               your complete interview transformation starts here.
             </p>
-            <button className='bg-black text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-yellow-100 hover:text-black border border-yellow-50 hover:border-yellow-300 transition-colors cursor-pointer' onClick={handleCTA}>Get Started</button>
+            <button 
+              className='bg-black text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-yellow-100 hover:text-black border border-yellow-50 hover:border-yellow-300 transition-colors cursor-pointer' 
+              onClick={handleCTA}
+            >
+              Get Started
+            </button>
           </div>
         </div>
       </div>
@@ -101,23 +114,24 @@ const LandingPage = () => {
           Made with ❤️...Happy Coding
         </div>
       </div>
+      
       <Modal
         isOpen={openAuthModal}
-        onClose={()=>{
+        onClose={() => {
           setOpenAuthModal(false);
           setCurrentPage("login");
-
         }}
-        hideHeader>
-          <div>
-            {currentPage === "login" && (
-              <Login setCurrentPage={setCurrentPage} />
-            )}
-            (currentPage === "signup" && (
-              <SignUp setCurrentPage={setCurrentPage} />
-            ))
-          </div>
-        </Modal>
+        hideHeader
+      >
+        <div>
+          {currentPage === "login" && (
+            <Login setCurrentPage={setCurrentPage} />
+          )}
+          {currentPage === "signup" && (
+            <SignUp setCurrentPage={setCurrentPage} />
+          )}
+        </div>
+      </Modal>
     </>
   );
 };
