@@ -12,7 +12,7 @@ const Navbar = () => {
                         alt="The Interview Alchemist Logo"
                         className="h-8 w-8"
                     />
-                    <h2 className="text-lg sm:text-2xl font-semibold text-neutral-900 whitespace-nowrap">The Interview Alchemist</h2>
+                    <h2 className="ext-base sm:text-lg md:text-2xl font-semibold text-neutral-900 whitespace-nowrap truncate max-w-[120px] sm:max-w-none">The Interview Alchemist</h2>
                 </Link>
             </div>
             <ProfileInfoCard />

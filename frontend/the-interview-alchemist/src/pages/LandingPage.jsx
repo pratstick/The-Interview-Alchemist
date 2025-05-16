@@ -46,7 +46,7 @@ const LandingPage = () => {
   return (
     <>
       {/* Animated background blobs */}
-      <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none">
+      <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
         <div className="absolute w-[500px] h-[500px] bg-amber-200/20 blur-[65px] top-0 left-0 animate-pulse" />
         <div className="absolute w-[350px] h-[350px] bg-blue-200/20 blur-[80px] bottom-0 right-0 animate-pulse" />
       </div>
