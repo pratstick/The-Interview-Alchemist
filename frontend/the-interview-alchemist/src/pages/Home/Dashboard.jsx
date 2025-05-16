@@ -76,21 +76,21 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stats/Overview Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="bg-blue-50 rounded-lg p-4 text-center">
+        {/* Stats/Overview Cards - Improved for mobile and scalability */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white border-l-4 border-blue-500 rounded-lg p-4 text-center shadow">
             <div className="text-2xl font-bold">{totalSessions}</div>
             <div className="text-xs text-gray-600">Sessions</div>
           </div>
-          <div className="bg-green-50 rounded-lg p-4 text-center">
+          <div className="bg-white border-l-4 border-green-500 rounded-lg p-4 text-center shadow">
             <div className="text-2xl font-bold">{totalQuestions}</div>
             <div className="text-xs text-gray-600">Total Q&A</div>
           </div>
-          <div className="bg-yellow-50 rounded-lg p-4 text-center">
+          <div className="bg-white border-l-4 border-yellow-500 rounded-lg p-4 text-center shadow">
             <div className="text-2xl font-bold">{pinnedQuestions}</div>
             <div className="text-xs text-gray-600">Pinned Qs</div>
           </div>
-          <div className="bg-purple-50 rounded-lg p-4 text-center">
+          <div className="bg-white border-l-4 border-purple-500 rounded-lg p-4 text-center shadow">
             <div className="text-2xl font-bold">{sessions.filter(s => s.updatedAt).length}</div>
             <div className="text-xs text-gray-600">Recently Updated</div>
           </div>
