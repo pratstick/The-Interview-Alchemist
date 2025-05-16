@@ -59,7 +59,7 @@ const InterviewPrep = () => {
       if (btnRef) lastLearnMoreBtnRef.current = btnRef;
 
       const response = await axiosInstance.post(
-        API_PATHS.AI.GENERATE_EXPLANATION, { question }
+        API_PATHS.AI.GENERATE_EXPLANATION, { question }, {timeout: 60000}
       );
 
       if (response.data) setExplanation(response.data);
@@ -142,8 +142,8 @@ const InterviewPrep = () => {
   }, [sessionId]);
 
   // Sticky header for context on scroll
-  const StickyRoleHeader = (
-    <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+  const RoleHeader = (
+    <div className="z-10 bg-transparent">
       <RoleInfoHeader
         role={sessionData?.role || ""}
         topicsToFocus={sessionData?.topicsToFocus || ""}
@@ -161,7 +161,7 @@ const InterviewPrep = () => {
 
   return (
     <DashboardLayout>
-      {StickyRoleHeader}
+      {RoleHeader}
 
       <main className='relative z-10 mx-auto pt-6 pb-8 px-4 md:px-0 max-w-5xl'>
         <h2 className='text-xl font-bold text-neutral-900 mb-2'>Interview Q&amp;A</h2>
