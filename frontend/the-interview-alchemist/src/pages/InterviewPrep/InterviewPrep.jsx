@@ -163,7 +163,7 @@ const InterviewPrep = () => {
     <DashboardLayout>
       {StickyRoleHeader}
 
-      <main className='mx-auto pt-6 pb-8 px-4 md:px-0 max-w-5xl'>
+      <main className='relative z-10 mx-auto pt-6 pb-8 px-4 md:px-0 max-w-5xl'>
         <h2 className='text-xl font-bold text-neutral-900 mb-2'>Interview Q&amp;A</h2>
 
         {/* Loader and empty/error state for session/questions */}
