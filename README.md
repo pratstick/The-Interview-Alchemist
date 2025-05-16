@@ -108,6 +108,40 @@ Open [http://localhost:5173](http://localhost:5173) and start prepping!
 
 ---
 
+## Future Roadmap
+
+- **Google Analytics Integration:**  
+  Add analytics to better understand user behavior and improve the platform.
+
+- **Progressive Web App (PWA) Support:**  
+  Enable offline access and installability for a native app-like experience.
+
+- **Dark Mode:**  
+  Provide a toggle for light/dark themes for better accessibility and comfort.
+
+- **Enhanced Accessibility:**  
+  Further improve keyboard navigation and screen reader support.
+
+- **Mobile UX Enhancements:**  
+  Optimize touch interactions and layouts for smaller screens.
+
+- **More AI Providers:**  
+  Support for additional AI models and providers beyond Google Gemini.
+
+- **Export & Share:**  
+  Allow users to export sessions/questions or share them with others.
+
+- **Interview Simulation Mode:**  
+  Timed mock interviews with scoring and feedback.
+
+- **User Profiles & Progress Tracking:**  
+  Personalized dashboards, achievements, and history.
+
+- **Internationalization (i18n):**  
+  Multi-language support for a global audience.
+
+---
+
 ## Contributing
 
 Pull requests are welcome! For major changes, open an issue first to discuss what you’d like to change.  
