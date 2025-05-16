@@ -3,5 +3,9 @@
     "@tailwindcss/vite": "^4.1.6",
     "bcrypt": "^6.0.0",
     "tailwindcss": "^4.1.6"
+  },
+  "scripts": {
+    "build": "cd ../frontend && npm install && npm run build",
+    "start": "node server.js"
   }
 }
