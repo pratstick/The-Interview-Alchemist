@@ -55,6 +55,11 @@ const LandingPage = () => {
         <div className='container mx-auto px-4 pt-6 pb-[200px] relative z-10'>
           <header className='flex justify-between items-center mb-16'>
             <div className='text-xl text-black font-bold tracking-tight flex items-center gap-2'>
+              <img
+                src="/logo.svg"
+                alt="The Interview Alchemist Logo"
+                className="h-9 w-9"
+              />
               {/*<img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Gemini AI" className="w-7 h-7 mr-1" />*/}
               The Interview Alchemist
             </div>
