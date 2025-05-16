@@ -44,7 +44,7 @@ A full-stack MERN application to help you prepare for technical interviews with 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/The-Interview-Alchemist.git
+git clone https://github.com/pratstick/The-Interview-Alchemist.git
 cd The-Interview-Alchemist
 ```
 
@@ -111,7 +111,9 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ## License
 
-[MIT](LICENSE)
+This project is licensed under the [GNU General Public License (GPL)](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+See the [LICENSE](LICENSE) file for details.
 
 ---
 
