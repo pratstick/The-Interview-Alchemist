@@ -1,3 +1,16 @@
+export const CARD_BG = [
+  { id: 1, bgcolor: 'linear-gradient(135deg, #e6f8f3 0%, #f7fcfa 100%)' },
+  { id: 2, bgcolor: 'linear-gradient(135deg, #f0f4ff 0%, #f7f9ff 100%)' },
+  { id: 3, bgcolor: 'linear-gradient(135deg, #fff4e6 0%, #fffaf0 100%)' },
+  { id: 4, bgcolor: 'linear-gradient(135deg, #fef2f8 0%, #fffaf0 100%)' },
+  { id: 5, bgcolor: 'linear-gradient(135deg, #f0f4ff 0%, #f7f9ff 100%)' },
+  { id: 6, bgcolor: 'linear-gradient(135deg, #e6f8f3 0%, #f7fcfa 100%)' },
+  { id: 7, bgcolor: 'linear-gradient(135deg, #fff4e6 0%, #fffaf0 100%)' },
+  { id: 8, bgcolor: 'linear-gradient(135deg, #fef2f8 0%, #fffaf0 100%)' },
+  { id: 9, bgcolor: 'linear-gradient(135deg, #f0f4ff 0%, #f7f9ff 100%)' },
+  { id: 10, bgcolor: 'linear-gradient(135deg, #e6f8f3 0%, #f7fcfa 100%)' },
+];
+
 export const APP_FEATURES = [
   {
     id: "01",

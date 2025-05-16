@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
 import { validateEmail } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import uploadImage from '../../utils/uploadImage';
 
 const SignUp = ({ setCurrentPage }) => {
   const [profilePic, setProfilePic] = useState(null);
@@ -11,12 +15,15 @@ const SignUp = ({ setCurrentPage }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { updateUser } = useContext(UserContext);
 
   const navigate = useNavigate();
   
   const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    let profileImageUrl = "";
     
     // Validation
     if (!fullName.trim()) {
@@ -47,16 +54,27 @@ const SignUp = ({ setCurrentPage }) => {
     
     try {
       // Signup API call
-      // const formData = new FormData();
-      // formData.append('fullName', fullName);
-      // formData.append('email', email);
-      // formData.append('password', password);
-      // if (profilePic) formData.append('profilePic', profilePic);
-      
-      // const response = await authService.signup(formData);
-      // handle successful signup (store token, redirect, etc.)
-      navigate('/dashboard'); // Redirect on success
+      if (profilePic) {
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        name: fullName,
+        email,
+        password,
+        profileImageUrl
+      });
+      const { token } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(response.data);
+        navigate("/dashboard");
+      }
+
+
     } catch (error) {
+      console.error(error);
       let errorMessage = "Something went wrong. Please try again";
       
       if (error.response) {

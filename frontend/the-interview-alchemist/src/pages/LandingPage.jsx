@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 import HERO_IMG from "../assets/hero-img.png";
 import { APP_FEATURES } from "../utils/data";
 import { useNavigate } from 'react-router-dom';
@@ -6,16 +8,21 @@ import { LuSparkles } from 'react-icons/lu';
 import Login from './Auth/Login';
 import SignUp from './Auth/SignUp';
 import Modal from '../components/Modal';
+import ProfileInfoCard from '../components/Cards/ProfileInfoCard';
 
 const LandingPage = () => {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
   const handleCTA = () => {
-    setOpenAuthModal(true);
-    setCurrentPage("signup");
+    if (!user) {
+      setOpenAuthModal(true);
+    }else {
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -26,12 +33,12 @@ const LandingPage = () => {
         <div className='container mx-auto px-4 pt-6 pb-[200px] relative z-10'>
           <header className='flex justify-between items-center mb-16'>
             <div className='text-xl text-black font-bold'>The Interview Alchemist</div>
-            <button 
+            {user ? <ProfileInfoCard />:<button 
               className='bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-black hover:text-white border border-white transition-colors cursor-pointer' 
               onClick={() => setOpenAuthModal(true)}
             >
               Login/SignUp
-            </button>
+            </button>}
           </header>
           <div className='flex flex-col md:flex-row items-center'>
             <div className='w-full md:w-1/2 pr-4 mb-8 md:mb-0'>
