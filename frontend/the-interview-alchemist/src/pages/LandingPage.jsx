@@ -124,7 +124,7 @@ const LandingPage = () => {
               <img
                 src={HERO_IMG}
                 alt="Hero"
-                className='w-[90vw] max-w-xl rounded-lg shadow-lg border border-amber-100 animate-fade-in'
+                className='w-full max-w-3xl rounded-lg shadow-lg border border-amber-100 animate-fade-in'
                 style={{ animationDelay: "0.2s" }}
               />
             </div>
