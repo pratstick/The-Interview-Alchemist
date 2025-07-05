@@ -1,166 +1,92 @@
 # The Interview Alchemist
 
-**Ace your next tech interview with AI-powered prep, smart dashboards, and a beautiful, modern UI.**
+A web app to help you prepare for technical interviews. Generate questions, manage study sessions, and track your progress.
 
----
+## About
 
-## What is The Interview Alchemist?
+This project started as a way to practice for coding interviews without having to manually search for questions or remember what I've already covered. It uses Google's Gemini AI to generate relevant interview questions based on the role and experience level you're targeting.
 
-The Interview Alchemist is your personal interview coach. It generates custom technical interview questions, lets you manage sessions, pin and annotate questions, and gives you actionable insights—all in a slick, responsive dashboard. Powered by Google Gemini and built with the modern MERN stack.
+You can create different sessions for different types of interviews (frontend, backend, data structures, etc.), pin important questions, and get explanations for concepts you're struggling with.
 
----
+## What it does
 
-## Features
+The app lets you create interview prep sessions where you specify:
+- What role you're preparing for
+- Your experience level  
+- Topics you want to focus on
 
-- **AI-Powered Interview Sessions**  
-  Instantly generate tailored interview questions and answers for any role, experience, or topic.
+It then generates a set of relevant questions with answers. You can pin questions you want to review later, and click "Learn More" on any question to get a deeper explanation of the concepts involved.
 
-- **Session Management**  
-  Create, view, pin/unpin, and delete interview prep sessions. Track your progress and notes.
-
-- **Smart Dashboard**  
-  - Personalized welcome and motivational tips  
-  - Quick stats: sessions, questions, pinned, recently updated  
-  - Search and filter by role, topic, or description  
-  - Beautiful empty state illustrations and CTAs
-
-- **Question Management**  
-  - Pin/unpin important questions  
-  - Add notes to any question  
-  - Get AI-powered explanations for tricky concepts
-
-- **Modern, Responsive UI**  
-  - Built with Tailwind CSS  
-  - Accessible modals, dialogs, and mobile-friendly layouts
-
----
+There's also a dashboard that shows your recent sessions and some basic stats.
 
 ## Tech Stack
 
-- **Frontend:** React, Tailwind CSS, Axios, React Router, Moment.js  
-- **Backend:** Node.js, Express, MongoDB, Mongoose  
-- **AI Integration:** Google Gemini (via @google/genai)  
-- **Authentication:** JWT-based (with protected routes)
+Frontend: React, Tailwind CSS, React Router  
+Backend: Node.js, Express, MongoDB  
+AI: Google Gemini API
 
----
+## Setup
 
-## Quickstart
-
-### 1. Clone the repo
-
+Clone the repo:
 ```bash
 git clone https://github.com/pratstick/The-Interview-Alchemist.git
 cd The-Interview-Alchemist
 ```
 
-### 2. Configure Environment Variables
+You'll need to set up environment variables. Copy the `.env.example` files in both `backend` and `frontend` directories and fill in your MongoDB URI, JWT secret, and Google Gemini API key.
 
-- Copy `.env.example` to `.env` in both `/backend` and `/frontend` folders.
-- Fill in your MongoDB URI, JWT secret, Google API key, etc.
-
-### 3. Install Dependencies
-
+Install dependencies:
 ```bash
+# Backend
 cd backend
 npm install
 
-cd ../frontend
+# Frontend
+cd frontend/the-interview-alchemist
 npm install
 ```
 
-### 4. Run the App
-
-**Backend:**
-
+Run both servers:
 ```bash
-cd backend
+# Backend (in backend directory)
+npm run dev
+
+# Frontend (in frontend/the-interview-alchemist directory)  
 npm run dev
 ```
 
-**Frontend:**
-
-```bash
-cd frontend
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) and start prepping!
-
----
+The frontend should be available at http://localhost:5173.
 
 ## Project Structure
 
 ```
-/backend
-  /controllers
-  /models
-  /routes
-  /utils
-  server.js
-/frontend
-  /src
-    /components
-    /pages
-    /utils
-    App.jsx
-    main.jsx
+backend/
+  controllers/    # API route handlers
+  models/        # MongoDB schemas  
+  routes/        # Express routes
+  utils/         # Helper functions
+  server.js      # Main server file
+
+frontend/the-interview-alchemist/
+  src/
+    components/  # Reusable React components
+    pages/       # Main page components
+    utils/       # Frontend utilities
+    context/     # React context for state
 ```
-
----
-
-## Future Roadmap
-
-- **Google Analytics Integration:**  
-  Add analytics to better understand user behavior and improve the platform.
-
-- **Progressive Web App (PWA) Support:**  
-  Enable offline access and installability for a native app-like experience.
-
-- **Dark Mode:**  
-  Provide a toggle for light/dark themes for better accessibility and comfort.
-
-- **Enhanced Accessibility:**  
-  Further improve keyboard navigation and screen reader support.
-
-- **Mobile UX Enhancements:**  
-  Optimize touch interactions and layouts for smaller screens.
-
-- **More AI Providers:**  
-  Support for additional AI models and providers beyond Google Gemini.
-
-- **Export & Share:**  
-  Allow users to export sessions/questions or share them with others.
-
-- **Interview Simulation Mode:**  
-  Timed mock interviews with scoring and feedback.
-
-- **User Profiles & Progress Tracking:**  
-  Personalized dashboards, achievements, and history.
-
-- **Internationalization (i18n):**  
-  Multi-language support for a global audience.
-
----
 
 ## Contributing
 
-Pull requests are welcome! For major changes, open an issue first to discuss what you’d like to change.  
-Ideas for new features, UI improvements, or bug fixes are always appreciated.
-
----
+Feel free to open issues or submit pull requests. I'm particularly interested in:
+- UI/UX improvements
+- Better question generation prompts  
+- Mobile responsiveness fixes
+- Performance optimizations
 
 ## License
 
-This project is licensed under the [GNU General Public License (GPL)](https://www.gnu.org/licenses/gpl-3.0.en.html).  
-See the [LICENSE](LICENSE) file for details.
+GPL-3.0 License - see LICENSE file
 
 ---
 
-## Credits
-
-- [Popsy Illustrations](https://popsy.co/)
-- [Google Gemini AI](https://ai.google.dev/)
-
----
-
-> **Made with ☕, code, and a dash of AI magic. Good luck on your interviews!**
+Built during my own interview prep journey. Hope it helps with yours too!
