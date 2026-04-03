@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LuPlus } from "react-icons/lu";
+import { LuPlus, LuBriefcase, LuMessageSquare, LuPin, LuRefreshCw, LuSearch } from "react-icons/lu";
 import { CARD_BG } from "../../utils/data";
 import toast from "react-hot-toast";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
@@ -76,35 +76,58 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stats/Overview Cards - Improved for mobile and scalability */}
+        {/* Stats/Overview Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white border-l-4 border-blue-500 rounded-lg p-4 text-center shadow">
-            <div className="text-2xl font-bold">{totalSessions}</div>
-            <div className="text-xs text-gray-600">Sessions</div>
+          <div className="bg-white rounded-xl p-5 shadow border border-amber-100 flex items-center gap-4">
+            <div className="bg-amber-100 text-amber-600 rounded-full p-3">
+              <LuBriefcase className="text-xl" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900">{totalSessions}</div>
+              <div className="text-xs text-gray-500 font-medium">Sessions</div>
+            </div>
           </div>
-          <div className="bg-white border-l-4 border-green-500 rounded-lg p-4 text-center shadow">
-            <div className="text-2xl font-bold">{totalQuestions}</div>
-            <div className="text-xs text-gray-600">Total Q&A</div>
+          <div className="bg-white rounded-xl p-5 shadow border border-amber-100 flex items-center gap-4">
+            <div className="bg-blue-100 text-blue-500 rounded-full p-3">
+              <LuMessageSquare className="text-xl" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900">{totalQuestions}</div>
+              <div className="text-xs text-gray-500 font-medium">Total Q&A</div>
+            </div>
           </div>
-          <div className="bg-white border-l-4 border-yellow-500 rounded-lg p-4 text-center shadow">
-            <div className="text-2xl font-bold">{pinnedQuestions}</div>
-            <div className="text-xs text-gray-600">Pinned Qs</div>
+          <div className="bg-white rounded-xl p-5 shadow border border-amber-100 flex items-center gap-4">
+            <div className="bg-rose-100 text-rose-500 rounded-full p-3">
+              <LuPin className="text-xl" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900">{pinnedQuestions}</div>
+              <div className="text-xs text-gray-500 font-medium">Pinned Qs</div>
+            </div>
           </div>
-          <div className="bg-white border-l-4 border-purple-500 rounded-lg p-4 text-center shadow">
-            <div className="text-2xl font-bold">{sessions.filter(s => s.updatedAt).length}</div>
-            <div className="text-xs text-gray-600">Recently Updated</div>
+          <div className="bg-white rounded-xl p-5 shadow border border-amber-100 flex items-center gap-4">
+            <div className="bg-emerald-100 text-emerald-500 rounded-full p-3">
+              <LuRefreshCw className="text-xl" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900">{sessions.filter(s => s.updatedAt).length}</div>
+              <div className="text-xs text-gray-500 font-medium">Recently Updated</div>
+            </div>
           </div>
         </div>
 
         {/* Search/Filter Bar */}
         <div className="mb-6 flex flex-col sm:flex-row gap-3 items-center">
-          <input
-            type="text"
-            placeholder="Search by role, topic, or description..."
-            className="w-full sm:w-96 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+          <div className="relative w-full sm:w-96">
+            <LuSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+            <input
+              type="text"
+              placeholder="Search by role, topic, or description..."
+              className="w-full border border-gray-200 rounded-full pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 bg-white shadow-sm"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+          </div>
         </div>
 
         {/* Empty State Illustration */}
@@ -115,9 +138,9 @@ const Dashboard = () => {
               alt="No interview sessions found"
               className="w-40 mb-4"
             />
-            <p className="text-gray-500 mb-2">No interview sessions found.</p>
+            <p className="text-gray-500 mb-4">No interview sessions found.</p>
             <button
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-white font-semibold px-6 py-2.5 rounded-full shadow hover:shadow-md transition-shadow"
               onClick={() => setOpenCreateModal(true)}
             >
               Create your first session
@@ -150,15 +173,18 @@ const Dashboard = () => {
 
         {/* Interview Tip Section */}
         <div className="mt-10">
-          <h2 className="text-lg font-semibold mb-2">Interview Tip</h2>
-          <div className="bg-yellow-50 p-4 rounded text-sm text-yellow-800">
-            Practice behavioral questions as much as technical ones! Consistency and confidence are key.
+          <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+            <span className="text-xl">💡</span>
+            <div>
+              <p className="text-sm font-semibold text-amber-800 mb-1">Interview Tip</p>
+              <p className="text-sm text-amber-700">Practice behavioral questions as much as technical ones! Consistency and confidence are key.</p>
+            </div>
           </div>
         </div>
 
         {/* Add New Button */}
         <button
-          className="fixed bottom-8 right-8 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 rounded-full shadow-lg transition-colors"
+          className="fixed bottom-8 right-8 flex items-center gap-2 bg-gradient-to-r from-[#FF9324] to-[#e99a4b] hover:from-[#e99a4b] hover:to-[#FF9324] text-white font-semibold px-5 py-3 rounded-full shadow-lg transition-all"
           onClick={() => setOpenCreateModal(true)}
         >
           <LuPlus className="text-2xl text-white" />
