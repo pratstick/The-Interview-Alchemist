@@ -12,17 +12,15 @@ const UserProvider = ({ children }) => {
     useEffect(() => {
         if(user) return;
 
-        const accessToken = localStorage.getItem('token');
-        if(!accessToken) {
-            setLoading(false);
-            return;
-        }
         const fetchUser = async () => {
             try {
                 const response = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE);
                 setUser(response.data);
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                // 401 means no valid session; not an unexpected error
+                if (!error.response || error.response.status !== 401) {
+                    console.error('Error fetching user data:', error);
+                }
                 clearUser();
             } finally {
                 setLoading(false);
@@ -32,18 +30,27 @@ const UserProvider = ({ children }) => {
         fetchUser();
     }
     , []);
+
     const updateUser = (userData) => {  
         setUser(userData);
-        localStorage.setItem("token", userData.token);
         setLoading(false);
     };
+
     const clearUser = () => {
         setUser(null);
-        localStorage.removeItem('token');
+    };
+
+    const logoutUser = async () => {
+        try {
+            await axiosInstance.post(API_PATHS.AUTH.LOGOUT);
+        } catch {
+            // Ignore errors — clear the local state regardless
+        }
+        clearUser();
     };
 
     return (
-        <UserContext.Provider value={{ user, loading, updateUser, clearUser }}>
+        <UserContext.Provider value={{ user, loading, updateUser, clearUser, logoutUser }}>
             {children}
         </UserContext.Provider>
     );

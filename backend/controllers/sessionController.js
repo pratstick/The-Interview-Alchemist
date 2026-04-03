@@ -33,7 +33,7 @@ exports.createSession = async (req, res) => {
 
         res.status(201).json({ success: true, session });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        res.status(500).json({ success: false, message: 'Server error' });
     }   
 };
 
@@ -43,10 +43,13 @@ exports.createSession = async (req, res) => {
 
 exports.getMySessions = async (req, res) => {
     try {
-        const sessions = await Session.find({ user: req.user._id }).sort({ createdAt: -1 }).populate('questions');
+        // Select only question IDs (not full documents) to avoid over-fetching
+        const sessions = await Session.find({ user: req.user._id })
+            .sort({ createdAt: -1 })
+            .populate({ path: 'questions', select: '_id isPinned' });
         res.status(200).json(sessions);
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 
@@ -63,9 +66,15 @@ exports.getSessionById = async (req, res) => {
         if (!session) {
             return res.status(404).json({ success: false, message: 'Session not found' });
         }
+
+        // Verify that the session belongs to the requesting user
+        if (session.user.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ success: false, message: 'Not authorized to access this session' });
+        }
+
         res.status(200).json({ success: true, session });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 
@@ -81,7 +90,7 @@ exports.deleteSession = async (req, res) => {
 
         //check if the session belongs to the logged-in user
         if (session.user.toString() !== req.user._id.toString()) {
-            return res.status(401).json({ success: false, message: 'Not authorized to delete this session' });
+            return res.status(403).json({ success: false, message: 'Not authorized to delete this session' });
         }
         //First delete all questions linked to the session
         await Question.deleteMany({ session: session._id });
@@ -90,6 +99,6 @@ exports.deleteSession = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Session deleted successfully' });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 };

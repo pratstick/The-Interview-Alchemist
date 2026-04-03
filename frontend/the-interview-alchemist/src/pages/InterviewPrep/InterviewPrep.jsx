@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import moment from 'moment';
+import { format } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LuCircleAlert, LuListCollapse } from 'react-icons/lu';
 import SpinnerLoader from '../../components/loader/SpinnerLoader';
@@ -13,6 +13,7 @@ import AIResponsePreview from './components/AIResponsePreview';
 import SkeletonLoader from '../../components/loader/SkeletonLoader';
 import RoleInfoHeader from './components/RoleInfoHeader'
 import Drawer from '../../components/Drawer'
+import emptyStateImg from '../../assets/empty-state.svg';
 
 const InterviewPrep = () => {
   const { sessionId } = useParams();
@@ -152,7 +153,7 @@ const InterviewPrep = () => {
         description={sessionData?.description || ""}
         lastUpdated={
           sessionData?.updatedAt
-            ? moment(sessionData?.updatedAt).format("Do MMM YYYY")
+            ? format(new Date(sessionData?.updatedAt), "do MMM yyyy")
             : ""
         }
       />
@@ -186,7 +187,7 @@ const InterviewPrep = () => {
         ) : !sessionData?.questions?.length ? (
           <section className="flex flex-col items-center justify-center py-16" aria-live="polite">
             <img
-              src="https://illustrations.popsy.co/amber/team-idea.svg"
+              src={emptyStateImg}
               alt="No questions"
               className="w-40 mb-4"
             />

@@ -17,6 +17,11 @@ exports.addQuestionsToSession = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Session not found' });
         }
 
+        // Verify that the session belongs to the requesting user
+        if (session.user.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ success: false, message: 'Not authorized to modify this session' });
+        }
+
         // Create new questions and associate them with the session
 
         const createdQuestions = await Question.insertMany(
@@ -31,7 +36,7 @@ exports.addQuestionsToSession = async (req, res) => {
         await session.save();
         res.status(201).json({ success: true, questions: createdQuestions });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 
@@ -44,12 +49,19 @@ exports.togglePinQuestion = async (req, res) => {
         if (!question) {
             return res.status(404).json({ success: false, message: 'Question not found' });
         }
+
+        // Verify that the session owning this question belongs to the requesting user
+        const session = await Session.findById(question.session);
+        if (!session || session.user.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ success: false, message: 'Not authorized to modify this question' });
+        }
+
         question.isPinned = !question.isPinned;
         await question.save();
         res.status(200).json({ success: true, question });
     }
     catch (error) {
-        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 
@@ -63,10 +75,10 @@ exports.updateQuestionNotes = async (req, res) => {
         if (!question) {
             return res.status(404).json({ success: false, message: 'Question not found' });
         }
-        question.note = note || "";
+        question.note = notes || "";
         await question.save();
         res.status(200).json({ success: true, question });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 }; 

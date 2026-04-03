@@ -8,6 +8,7 @@ export const API_PATHS = {
         LOGIN: `/api/auth/login`,
         REGISTER: `/api/auth/register`,
         GET_PROFILE: `/api/auth/profile`,
+        LOGOUT: `/api/auth/logout`,
     },
 
     IMAGE:  {
@@ -27,7 +28,7 @@ export const API_PATHS = {
     },
 
     QUESTION: {
-        ADD_TO_SESSION: "/api/questions/pin", // Add a question to a session
+        ADD_TO_SESSION: "/api/questions/add", // Add a question to a session
         PIN: (id) => `/api/questions/${id}/pin`, // Pin a question
         UPDATE_NOTE: (id) => `/api/questions/${id}/note`, // Update a question's note
     },
