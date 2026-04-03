@@ -25,6 +25,11 @@ const registerUser = async (req, res) => {
     try{
         const { name, email, password } = req.body;
 
+        // Ensure inputs are strings to prevent NoSQL injection via object payloads
+        if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
+            return res.status(400).json({ message: 'Invalid input types' });
+        }
+
         // Check if user already exists
         const userExists = await User.findOne({ email });
         if (userExists) {
@@ -62,6 +67,11 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        // Ensure inputs are strings to prevent NoSQL injection via object payloads
+        if (typeof email !== 'string' || typeof password !== 'string') {
+            return res.status(400).json({ message: 'Invalid input types' });
+        }
 
         // Check if user exists
         const user = await User.findOne({ email });
@@ -123,9 +133,9 @@ const uploadProfileImage = async (req, res) => {
 
     // Delete the old profile image if it exists and is stored locally
     const user = await User.findById(req.user._id);
-    if (user && user.profileImageUrl) {
+    if (user && user.profileImageUrl && user.profileImageUrl.startsWith(`${req.protocol}://${req.get('host')}/uploads/`)) {
         try {
-            const oldFilename = path.basename(new URL(user.profileImageUrl).pathname);
+            const oldFilename = path.basename(user.profileImageUrl);
             const oldFilePath = path.join(__dirname, '..', 'uploads', oldFilename);
             if (fs.existsSync(oldFilePath)) {
                 fs.unlinkSync(oldFilePath);
