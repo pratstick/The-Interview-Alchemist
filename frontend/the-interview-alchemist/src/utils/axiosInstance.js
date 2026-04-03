@@ -11,6 +11,25 @@ const axiosInstance = axios.create({
     },
 });
 
+// Read the CSRF token from the cookie jar and attach it as a request header
+// so the server can validate the double-submit cookie pattern.
+function getCsrfToken() {
+    const match = document.cookie.match(/(?:^|;\s*)csrf-token=([^;]+)/);
+    return match ? decodeURIComponent(match[1]) : null;
+}
+
+// Add a request interceptor
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const csrfToken = getCsrfToken();
+        if (csrfToken) {
+            config.headers['X-CSRF-Token'] = csrfToken;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
+
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
     (response) => {

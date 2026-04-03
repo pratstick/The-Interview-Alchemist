@@ -19,7 +19,7 @@ const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "http://localhost:5173";
 app.use(cors({
   origin: ALLOWED_ORIGIN,
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-CSRF-Token"],
   credentials: true,
 }));
 
@@ -29,15 +29,22 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 
-// CSRF protection: reject state-changing requests whose Origin doesn't match
-// (Works in conjunction with SameSite=Strict cookies)
+// CSRF protection: double-submit cookie pattern
+// The client reads the csrf-token cookie (non-httpOnly) and echoes it
+// back as the X-CSRF-Token header on every state-changing request.
+// Auth endpoints (login/register) are exempt — they establish the session.
 app.use((req, res, next) => {
   const safeMethods = ["GET", "HEAD", "OPTIONS"];
-  if (safeMethods.includes(req.method)) return next();
+  const csrfExemptPaths = ["/api/auth/login", "/api/auth/register"];
+  if (safeMethods.includes(req.method) || csrfExemptPaths.includes(req.path)) {
+    return next();
+  }
 
-  const origin = req.headers.origin || req.headers.referer || "";
-  if (!origin.startsWith(ALLOWED_ORIGIN)) {
-    return res.status(403).json({ message: "Forbidden: origin mismatch" });
+  const cookieToken = req.cookies["csrf-token"];
+  const headerToken = req.headers["x-csrf-token"];
+
+  if (!cookieToken || !headerToken || cookieToken !== headerToken) {
+    return res.status(403).json({ message: "Forbidden: invalid CSRF token" });
   }
   next();
 });

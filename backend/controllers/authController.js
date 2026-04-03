@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
 
@@ -9,6 +10,17 @@ const COOKIE_OPTIONS = {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+};
+
+// Generate a random CSRF token and attach it as a readable cookie
+const attachCsrfToken = (res) => {
+    const csrfToken = crypto.randomBytes(32).toString('hex');
+    res.cookie('csrf-token', csrfToken, {
+        httpOnly: false, // Must be readable by JS so the client can echo it back
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 };
 
 //Generate JWT token
@@ -48,6 +60,7 @@ const registerUser = async (req, res) => {
 
         const token = generateToken(user._id);
         res.cookie('token', token, COOKIE_OPTIONS);
+        attachCsrfToken(res);
 
         //Return user data
         res.status(201).json({
@@ -87,6 +100,7 @@ const loginUser = async (req, res) => {
 
         const token = generateToken(user._id);
         res.cookie('token', token, COOKIE_OPTIONS);
+        attachCsrfToken(res);
 
         // Return user data
         res.status(200).json({
