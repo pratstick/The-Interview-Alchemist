@@ -10,19 +10,20 @@ const questionAnswerPrompt = (role, experience, topicsToFocus, numberOfQuestions
     - If the answers needs code examples, provide the code in a code block.
     - Provide the answer in a clear and concise manner.
     - keep formatting very clean
-    - Return a pure JSON array like:
-    [
-        {
-            "question": "What is the difference between a class and an object?",
-            "answer": "A class is a blueprint for creating objects. An object is an instance of a class."
-        },
-        {
-            "question": "What is polymorphism?",
-            "answer": "Polymorphism allows methods to do different things based on the object it is acting upon."
-        }
-        // ...
-    ]
-    Important: Do not include any other text or explanation. Just return the valid JSON array.
+    - Return a JSON object with a "questions" array like:
+    {
+        "questions": [
+            {
+                "question": "What is the difference between a class and an object?",
+                "answer": "A class is a blueprint for creating objects. An object is an instance of a class."
+            },
+            {
+                "question": "What is polymorphism?",
+                "answer": "Polymorphism allows methods to do different things based on the object it is acting upon."
+            }
+        ]
+    }
+    Important: Do not include any other text or explanation. Just return the valid JSON object.
 `);
 
 
