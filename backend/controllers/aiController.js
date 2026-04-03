@@ -4,15 +4,21 @@ const { questionAnswerPrompt, conceptExplainPrompt } = require("../utils/prompts
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 const QUESTIONS_SCHEMA = {
-    type: "array",
-    items: {
-        type: "object",
-        properties: {
-            question: { type: "string" },
-            answer: { type: "string" },
+    type: "object",
+    properties: {
+        questions: {
+            type: "array",
+            items: {
+                type: "object",
+                properties: {
+                    question: { type: "string" },
+                    answer: { type: "string" },
+                },
+                required: ["question", "answer"],
+            },
         },
-        required: ["question", "answer"],
     },
+    required: ["questions"],
 };
 
 const EXPLANATION_SCHEMA = {
@@ -61,8 +67,9 @@ const generateInterviewQuestions = async (req, res) => {
 
         const result = await model.generateContent(prompt);
         const data = JSON.parse(result.response.text());
-        res.status(200).json(data);
+        res.status(200).json(data.questions);
     } catch (error) {
+        console.error('generateInterviewQuestions error:', error);
         res.status(500).json({ success: false, message: 'Failed to generate questions' });
     }
 };
@@ -94,6 +101,7 @@ const generateConceptExplanation = async (req, res) => {
         const data = JSON.parse(result.response.text());
         res.status(200).json(data);
     } catch (error) {
+        console.error('generateConceptExplanation error:', error);
         res.status(500).json({ success: false, message: 'Failed to generate explanation' });
     }
 };
