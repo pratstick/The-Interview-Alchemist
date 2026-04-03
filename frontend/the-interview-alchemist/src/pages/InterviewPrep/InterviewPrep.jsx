@@ -67,7 +67,14 @@ const InterviewPrep = () => {
 
     } catch (error) {
       setExplanation(null);
-      setErrorMsg("Error generating explanation");
+      const serverMsg = error.response?.data?.message;
+      if (error.response?.status === 503) {
+        setErrorMsg(serverMsg || "AI service is temporarily unavailable. Please try again.");
+      } else if (error.response?.status === 429) {
+        setErrorMsg("Too many requests. Please wait a moment and try again.");
+      } else {
+        setErrorMsg(serverMsg || "Error generating explanation. Please try again.");
+      }
       console.error("Error generating explanation:", error);
     } finally {
       setIsLoading(false);
