@@ -1,4 +1,4 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenerativeAI, GoogleGenerativeAIResponseError, GoogleGenerativeAIFetchError } = require("@google/generative-ai");
 const { questionAnswerPrompt, conceptExplainPrompt } = require("../utils/prompts");
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
@@ -66,10 +66,39 @@ const generateInterviewQuestions = async (req, res) => {
         });
 
         const result = await model.generateContent(prompt);
-        const data = JSON.parse(result.response.text());
+
+        let responseText;
+        try {
+            responseText = result.response.text();
+        } catch (responseError) {
+            console.error('generateInterviewQuestions: AI response error:', responseError.message);
+            return res.status(503).json({ success: false, message: 'AI response was blocked or unavailable' });
+        }
+
+        if (!responseText) {
+            console.error('generateInterviewQuestions: Empty response from AI');
+            return res.status(503).json({ success: false, message: 'AI returned an empty response' });
+        }
+
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            console.error('generateInterviewQuestions: JSON parse error:', parseError.message, '| Response preview:', responseText.slice(0, 200));
+            return res.status(500).json({ success: false, message: 'Failed to parse AI response' });
+        }
+
+        if (!Array.isArray(data.questions)) {
+            console.error('generateInterviewQuestions: Unexpected response structure:', JSON.stringify(data).slice(0, 200));
+            return res.status(500).json({ success: false, message: 'AI returned unexpected response format' });
+        }
+
         res.status(200).json(data.questions);
     } catch (error) {
-        console.error('generateInterviewQuestions error:', error);
+        console.error('generateInterviewQuestions error:', error.name, error.message);
+        if (error instanceof GoogleGenerativeAIFetchError) {
+            return res.status(503).json({ success: false, message: 'AI service request failed' });
+        }
         res.status(500).json({ success: false, message: 'Failed to generate questions' });
     }
 };
@@ -98,10 +127,42 @@ const generateConceptExplanation = async (req, res) => {
         });
 
         const result = await model.generateContent(prompt);
-        const data = JSON.parse(result.response.text());
+
+        let responseText;
+        try {
+            responseText = result.response.text();
+        } catch (responseError) {
+            console.error('generateConceptExplanation: AI response error:', responseError.message);
+            return res.status(503).json({ success: false, message: 'AI response was blocked or unavailable' });
+        }
+
+        if (!responseText) {
+            console.error('generateConceptExplanation: Empty response from AI');
+            return res.status(503).json({ success: false, message: 'AI returned an empty response' });
+        }
+
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            console.error('generateConceptExplanation: JSON parse error:', parseError.message, '| Response preview:', responseText.slice(0, 200));
+            return res.status(500).json({ success: false, message: 'Failed to parse AI response' });
+        }
+
+        if (!data.title || !data.explanation) {
+            console.error('generateConceptExplanation: Missing required fields in response:', JSON.stringify(data).slice(0, 200));
+            return res.status(500).json({ success: false, message: 'AI returned an incomplete response' });
+        }
+
         res.status(200).json(data);
     } catch (error) {
-        console.error('generateConceptExplanation error:', error);
+        console.error('generateConceptExplanation error:', error.name, error.message);
+        if (error instanceof GoogleGenerativeAIResponseError) {
+            return res.status(503).json({ success: false, message: 'AI response was blocked or unavailable' });
+        }
+        if (error instanceof GoogleGenerativeAIFetchError) {
+            return res.status(503).json({ success: false, message: 'AI service request failed' });
+        }
         res.status(500).json({ success: false, message: 'Failed to generate explanation' });
     }
 };
