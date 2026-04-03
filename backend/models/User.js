@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: null,
         },
+        goals: {
+            dailySessionGoal: { type: Number, default: 1, min: 1, max: 10 },
+            weeklyQuestionGoal: { type: Number, default: 10, min: 1, max: 200 },
+        },
     },
     { timestamps: true }
 );
