@@ -3,13 +3,10 @@ import ProfileInfoCard from "../Cards/ProfileInfoCard";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { LuSun, LuMoon } from "react-icons/lu";
-
-const Navbar = () => {
-    const { theme, toggleTheme } = useTheme();
-
 import { UserContext } from "../../context/UserContext";
 
 const Navbar = () => {
+    const { theme, toggleTheme } = useTheme();
     const { user } = useContext(UserContext);
     return (
         <div className="h-16 bg-neutral-50 dark:bg-gray-900 shadow dark:shadow-gray-800 flex items-center justify-between px-4 sm:px-6">
