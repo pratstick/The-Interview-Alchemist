@@ -20,13 +20,13 @@ const RoleInfoHeader = ({
                         <div className="w-16 h-16 bg-fuchsia-200 blur-[45px] animate-blob1" />
                     </div>
                     {/* Glassy content */}
-                    <div className="relative z-10 rounded-xl bg-white/40 backdrop-blur-md border border-white/30 shadow-lg p-6">
+                    <div className="relative z-10 rounded-xl bg-white/40 dark:bg-gray-900/50 backdrop-blur-md border border-white/30 dark:border-gray-700/30 shadow-lg p-6">
                         <div className="flex items-start">
                             <div className="flex-grow">
                                 <div className="flex items-start justify-between">
                                     <div>
-                                        <h2 className="text-2xl font-medium">{role}</h2>
-                                        <p className="text-sm font-medium text-gray-900 mt-1">
+                                        <h2 className="text-2xl font-medium dark:text-gray-100">{role}</h2>
+                                        <p className="text-sm font-medium text-gray-900 dark:text-gray-300 mt-1">
                                             {topicsToFocus}
                                         </p> 
                                     </div>

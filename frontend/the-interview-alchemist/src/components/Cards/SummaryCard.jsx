@@ -15,7 +15,7 @@ const SummaryCard = ({
 }) => {
   return (
     <div 
-      className={`bg-white border border-gray-300/40 rounded-xl p-2 overflow-hidden cursor-pointer hover:shadow-xl shadow-gray-100 relative group`} 
+      className={`bg-white dark:bg-gray-800 border border-gray-300/40 dark:border-gray-700/40 rounded-xl p-2 overflow-hidden cursor-pointer hover:shadow-xl shadow-gray-100 dark:shadow-gray-900 relative group`} 
       onClick={onSelect}
     >
       {/* Header Section */}
@@ -55,21 +55,21 @@ const SummaryCard = ({
       <div className='px-3 pb-3'>
         {/* Stats Chips */}
         <div className='flex items-center gap-3 mt-4'>
-          <div className='text-[10px] font-medium text-black px-3 py-1 border-[0.5px] border-gray-900 rounded-full'>
+          <div className='text-[10px] font-medium text-black dark:text-gray-200 px-3 py-1 border-[0.5px] border-gray-900 dark:border-gray-600 rounded-full'>
             Experience: {experience} {experience > 1 ? "years" : "year"}
           </div> 
 
-          <div className='text-[10px] font-medium text-black px-3 py-1 border-[0.5px] border-gray-900 rounded-full'>
+          <div className='text-[10px] font-medium text-black dark:text-gray-200 px-3 py-1 border-[0.5px] border-gray-900 dark:border-gray-600 rounded-full'>
             {questions} Q&A
           </div>
 
-          <div className='text-[10px] font-medium text-black px-3 py-1 border-[0.5px] border-gray-900 rounded-full'>
+          <div className='text-[10px] font-medium text-black dark:text-gray-200 px-3 py-1 border-[0.5px] border-gray-900 dark:border-gray-600 rounded-full'>
             Last Updated: {lastUpdated}
           </div>
         </div>
 
         {/* Description */}
-        <div className='text-[12px] text-gray-500 font-medium line-clamp-2 mt-3'>
+        <div className='text-[12px] text-gray-500 dark:text-gray-400 font-medium line-clamp-2 mt-3'>
           <p>{description}</p>
         </div>
       </div>

@@ -5,13 +5,13 @@ import Navbar from "./Navbar";
 const DashboardLayout = ({ children }) => {
     const { user } = useContext(UserContext);
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
             <Navbar />
             <div className="flex-1">
                 {user && children}
             </div>
             {/* Footer */}
-            <div className='text-sm bg-gray-50 text-secondary text-center p-5 border-t border-gray-200'>
+            <div className='text-sm bg-gray-50 dark:bg-gray-800 text-secondary dark:text-gray-400 text-center p-5 border-t border-gray-200 dark:border-gray-700'>
                 <div className="flex flex-col items-center gap-1">
                     <span>
                         Made with ❤️...Happy Coding
@@ -22,7 +22,7 @@ const DashboardLayout = ({ children }) => {
                             alt="Gemini AI"
                             className="w-5 h-5"
                         />
-                        <span className="text-xs text-gray-500 font-semibold">
+                        <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">
                             Powered by Google Gemini
                         </span>
                     </div>
@@ -30,7 +30,7 @@ const DashboardLayout = ({ children }) => {
                         href="https://github.com/pratstick/The-Interview-Alchemist"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-gray-400 hover:text-gray-700 text-xs mt-2 transition-colors"
+                        className="flex items-center gap-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-xs mt-2 transition-colors"
                         aria-label="GitHub Repository"
                     >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

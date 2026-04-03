@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
+/* Enable class-based dark mode for Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
 @theme{
     --font-display: "Urbanist", sans-serif;
     --breakpoint-3xl:1920px;
@@ -11,11 +14,18 @@
 @layer base {
   html {
     font-family: var(--font-display);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   body {
     background-color: #fcfbfc;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    background-color: #111827;
+    color: #f3f4f6;
   }
 
   /* Custom scrollbar styling */
@@ -106,14 +116,21 @@
 
   /* Form elements */
   .input-box {
-    @apply w-full flex justify-between gap-3 text-sm text-black rounded px-4 py-3 mb-4 mt-3 border border-gray-100 outline-none focus-within:border-orange-300;
+    @apply w-full flex justify-between gap-3 text-sm text-black dark:text-gray-100 rounded px-4 py-3 mb-4 mt-3 border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 outline-none focus-within:border-orange-300;
   }
 
   .btn-primary {
-    @apply w-full flex items-center justify-center gap-3 text-sm font-medium text-white bg-black shadow-lg shadow-orange-600/5 p-[10px] rounded-md my-1 hover:bg-orange-600/15 hover:text-black cursor-pointer;
+    @apply w-full flex items-center justify-center gap-3 text-sm font-medium text-white bg-black dark:bg-gray-700 shadow-lg shadow-orange-600/5 p-[10px] rounded-md my-1 hover:bg-orange-600/15 hover:text-black dark:hover:text-white cursor-pointer;
   }
 
   .btn-small {
     @apply flex items-center justify-center gap-3 bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-orange-300;
+  }
+
+  /* Theme toggle transition */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color;
+    transition-duration: 200ms;
+    transition-timing-function: ease;
   }
 }
