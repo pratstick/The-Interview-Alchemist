@@ -17,11 +17,16 @@ const UserProvider = ({ children }) => {
                 const response = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE);
                 setUser(response.data);
             } catch (error) {
-                // 401 means no valid session; not an unexpected error
-                if (!error.response || error.response.status !== 401) {
-                    console.error('Error fetching user data:', error);
+                if (error.response && error.response.status === 429) {
+                    // Rate limited — the session may still be valid; don't clear user
+                    console.warn('Profile fetch rate-limited (429). Will retry on next load.');
+                } else {
+                    // 401 means no valid session; not an unexpected error
+                    if (!error.response || error.response.status !== 401) {
+                        console.error('Error fetching user data:', error);
+                    }
+                    clearUser();
                 }
-                clearUser();
             } finally {
                 setLoading(false);
             }
