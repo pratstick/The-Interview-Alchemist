@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import { getProfileImageUrl } from '../../utils/helper';
 
 const ProfileInfoCard = () => {
     const { user, clearUser } = useContext(UserContext);
@@ -14,26 +15,18 @@ const ProfileInfoCard = () => {
 
     return user && (
         <div className="flex items-center gap-3">
-            <img
-                src={user.profileImageUrl || "https://picsum.photos/200"}
-                alt="Profile"
-                className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600"
-            />
-            <span className="text-base font-medium text-gray-800 dark:text-gray-200">
-                {user.name || "User Name"}
-            </span>
             <Link to="/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <img
-                    src={user.profileImageUrl || "https://picsum.photos/200"}
+                    src={getProfileImageUrl(user.profileImageUrl)}
                     alt="Profile"
-                    className="w-10 h-10 rounded-full border border-gray-300"
+                    className="w-9 h-9 rounded-full object-cover border border-gray-300 dark:border-gray-600"
                 />
-                <span className="hidden md:block text-base font-medium text-gray-800">
-                    {user.name || "User Name"}
+                <span className="hidden md:block text-sm font-medium text-gray-800 dark:text-gray-200">
+                    {user.name || "User"}
                 </span>
             </Link>
             <button
-                className="ml-2 px-3 py-1 rounded bg-blue-600 dark:bg-blue-700 text-white text-xs font-medium hover:bg-blue-700 dark:hover:bg-blue-600 transition"
+                className="ml-1 px-3 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-xs font-medium hover:bg-orange-100 dark:hover:bg-gray-600 transition cursor-pointer"
                 onClick={handleLogout}
             >
                 Logout

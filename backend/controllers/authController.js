@@ -149,10 +149,12 @@ const uploadProfileImage = async (req, res) => {
     }
 
     // Delete the old profile image if it exists and is stored locally
+    // Handles both legacy absolute URLs (http://host/uploads/file) and relative paths (/uploads/file)
     const user = await User.findById(req.user._id);
-    if (user && user.profileImageUrl && user.profileImageUrl.startsWith(`${req.protocol}://${req.get('host')}/uploads/`)) {
+    const oldUrl = user?.profileImageUrl || '';
+    if (oldUrl && /\/uploads\//.test(oldUrl)) {
         try {
-            const oldFilename = path.basename(user.profileImageUrl);
+            const oldFilename = path.basename(oldUrl);
             const oldFilePath = path.join(__dirname, '..', 'uploads', oldFilename);
             if (fs.existsSync(oldFilePath)) {
                 fs.unlinkSync(oldFilePath);
@@ -162,7 +164,8 @@ const uploadProfileImage = async (req, res) => {
         }
     }
 
-    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    // Store a relative path so the URL works in any environment (dev or prod)
+    const imageUrl = `/uploads/${req.file.filename}`;
 
     // Persist the new URL on the user document
     await User.findByIdAndUpdate(req.user._id, { profileImageUrl: imageUrl });

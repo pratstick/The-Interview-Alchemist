@@ -27,179 +27,181 @@ const AIResponsePreview = ({ content }) => {
     const { theme } = useTheme()
     if (!content) return null
     return (
-        <div className="rounded-lg bg-white/80 dark:bg-gray-800/80 shadow-sm p-4">
-            <div className="space-y-3">
-                <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                        code({ inline, className, children }) {
-                            const match = /language-(\w+)/.exec(className || '')
-                            const language = match ? match[1] : ''
-                            const isInline = !className && !inline
+        <div className="space-y-3 text-[15px] leading-relaxed">
+            <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                    code({ inline, className, children }) {
+                        const match = /language-(\w+)/.exec(className || '')
+                        const language = match ? match[1] : ''
 
-                            return isInline ? (
-                                <code className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded text-sm">
+                        // inline is true for backtick spans; block code always has a language class
+                        if (inline || !match) {
+                            return (
+                                <code className="px-1.5 py-0.5 bg-orange-50 dark:bg-gray-700 text-orange-700 dark:text-orange-300 rounded text-[13px] font-mono border border-orange-100 dark:border-gray-600">
                                     {children}
                                 </code>
-                            ) : (
-                                <CodeBlock
-                                    code={String(children).replace(/\n$/, '')}
-                                    language={language}
-                                    isDark={theme === 'dark'}
-                                />
                             )
-                        },
+                        }
 
-                        p({ children }) {
-                            return (
-                                <p className="text-base text-neutral-800 dark:text-neutral-200 leading-relaxed">
+                        return (
+                            <CodeBlock
+                                code={String(children).replace(/\n$/, '')}
+                                language={language}
+                                isDark={theme === 'dark'}
+                            />
+                        )
+                    },
+
+                    p({ children }) {
+                        return (
+                            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                                {children}
+                            </p>
+                        )
+                    },
+                    strong({ children }) {
+                        return (
+                            <strong className="font-semibold text-gray-900 dark:text-gray-100">
+                                {children}
+                            </strong>
+                        )
+                    },
+                    em({ children }) {
+                        return (
+                            <em className="italic text-gray-600 dark:text-gray-400">
+                                {children}
+                            </em>
+                        )
+                    },
+                    ul({ children }) {
+                        return (
+                            <ul className="list-disc list-outside pl-5 space-y-1 text-gray-700 dark:text-gray-300">
+                                {children}
+                            </ul>
+                        )
+                    },
+                    ol({ children }) {
+                        return (
+                            <ol className="list-decimal list-outside pl-5 space-y-1 text-gray-700 dark:text-gray-300">
+                                {children}
+                            </ol>
+                        )
+                    },
+                    li({ children }) {
+                        return (
+                            <li className="leading-relaxed">
+                                {children}
+                            </li>
+                        )
+                    },
+                    blockquote({ children }) {
+                        return (
+                            <blockquote className="border-l-4 border-orange-400 dark:border-orange-500 pl-4 italic text-gray-600 dark:text-gray-400 bg-orange-50/50 dark:bg-orange-900/10 py-2 rounded-r-lg">
+                                {children}
+                            </blockquote>
+                        )
+                    },
+                    h1({ children }) {
+                        return (
+                            <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-4 mb-1 pb-1 border-b border-gray-200 dark:border-gray-700">
+                                {children}
+                            </h1>
+                        )
+                    },
+                    h2({ children }) {
+                        return (
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-3 mb-1">
+                                {children}
+                            </h2>
+                        )
+                    },
+                    h3({ children }) {
+                        return (
+                            <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mt-2 mb-1">
+                                {children}
+                            </h3>
+                        )
+                    },
+                    h4({ children }) {
+                        return (
+                            <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-2 mb-0.5 uppercase tracking-wide">
+                                {children}
+                            </h4>
+                        )
+                    },
+                    a({ children, href }) {
+                        return (
+                            <a
+                                href={href}
+                                className="text-orange-500 dark:text-orange-400 underline underline-offset-2 hover:text-orange-600 dark:hover:text-orange-300 transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {children}
+                            </a>
+                        )
+                    },
+                    table({ children }) {
+                        return (
+                            <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 my-2">
+                                <table className="min-w-full text-sm">
                                     {children}
-                                </p>
-                            )
-                        },
-                        strong({ children }) {
-                            return (
-                                <strong className="font-semibold text-neutral-900 dark:text-neutral-100">
-                                    {children}
-                                </strong>
-                            )
-                        },
-                        em({ children }) {
-                            return (
-                                <em className="italic text-neutral-700 dark:text-neutral-300">
-                                    {children}
-                                </em>
-                            )
-                        },
-                        ul({ children }) {
-                            return (
-                                <ul className="list-disc pl-6 text-base text-neutral-800 dark:text-neutral-200 space-y-1">
-                                    {children}
-                                </ul>
-                            )
-                        },
-                        ol({ children }) {
-                            return (
-                                <ol className="list-decimal pl-6 text-base text-neutral-800 dark:text-neutral-200 space-y-1">
-                                    {children}
-                                </ol>
-                            )
-                        },
-                        li({ children }) {
-                            return (
-                                <li className="text-base text-neutral-800 dark:text-neutral-200">
-                                    {children}
-                                </li>
-                            )
-                        },
-                        blockquote({ children }) {
-                            return (
-                                <blockquote className="border-l-4 border-primary-300 pl-4 italic text-neutral-700 dark:text-neutral-300 bg-primary-50/40 dark:bg-gray-700/40 py-1">
-                                    {children}
-                                </blockquote>
-                            )
-                        },
-                        h1({ children }) {
-                            return (
-                                <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
-                                    {children}
-                                </h1>
-                            )
-                        },
-                        h2({ children }) {
-                            return (
-                                <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-                                    {children}
-                                </h2>
-                            )
-                        },
-                        h3({ children }) {
-                            return (
-                                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-1">
-                                    {children}
-                                </h3>
-                            )
-                        },
-                        h4({ children }) {
-                            return (
-                                <h4 className="text-base font-semibold text-neutral-900 dark:text-neutral-100 mb-1">
-                                    {children}
-                                </h4>
-                            )
-                        },
-                        a({ children, href }) {
-                            return (
-                                <a
-                                    href={href}
-                                    className="text-primary-600 underline hover:text-primary-700 transition-colors"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {children}
-                                </a>
-                            )
-                        },
-                        table({ children }) {
-                            return (
-                                <div className="overflow-x-auto rounded border border-neutral-200 dark:border-neutral-700 my-2">
-                                    <table className="min-w-full bg-white dark:bg-gray-800">
-                                        {children}
-                                    </table>
-                                </div>
-                            )
-                        },
-                        thead({ children }) {
-                            return (
-                                <thead className="bg-neutral-100 dark:bg-gray-700">
-                                    {children}
-                                </thead>
-                            )
-                        },
-                        tbody({ children }) {
-                            return (
-                                <tbody className="bg-white dark:bg-gray-800">
-                                    {children}
-                                </tbody>
-                            )
-                        },
-                        tr({ children }) {
-                            return (
-                                <tr className="border-b border-neutral-200 dark:border-neutral-700">
-                                    {children}
-                                </tr>
-                            )
-                        },
-                        th({ children }) {
-                            return (
-                                <th className="text-left px-4 py-2 font-semibold text-neutral-900 dark:text-neutral-100 bg-neutral-50 dark:bg-gray-700">
-                                    {children}
-                                </th>
-                            )
-                        },
-                        td({ children }) {
-                            return (
-                                <td className="px-4 py-2 text-base text-neutral-800 dark:text-neutral-200">
-                                    {children}
-                                </td>
-                            )
-                        },
-                        hr() {
-                            return <hr className="border-neutral-200 dark:border-neutral-700 my-4" />
-                        },
-                        img({ src, alt }) {
-                            return (
-                                <img
-                                    src={src}
-                                    alt={alt}
-                                    className="max-w-full h-auto rounded shadow"
-                                />
-                            )
-                        },
-                    }}
-                >
-                    {content}
-                </ReactMarkdown>
-            </div>
+                                </table>
+                            </div>
+                        )
+                    },
+                    thead({ children }) {
+                        return (
+                            <thead className="bg-gray-100 dark:bg-gray-700/80">
+                                {children}
+                            </thead>
+                        )
+                    },
+                    tbody({ children }) {
+                        return (
+                            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                                {children}
+                            </tbody>
+                        )
+                    },
+                    tr({ children }) {
+                        return (
+                            <tr className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                {children}
+                            </tr>
+                        )
+                    },
+                    th({ children }) {
+                        return (
+                            <th className="text-left px-4 py-2.5 font-semibold text-gray-700 dark:text-gray-200 text-xs uppercase tracking-wide">
+                                {children}
+                            </th>
+                        )
+                    },
+                    td({ children }) {
+                        return (
+                            <td className="px-4 py-2.5 text-gray-700 dark:text-gray-300">
+                                {children}
+                            </td>
+                        )
+                    },
+                    hr() {
+                        return <hr className="border-gray-200 dark:border-gray-700 my-3" />
+                    },
+                    img({ src, alt }) {
+                        return (
+                            <img
+                                src={src}
+                                alt={alt}
+                                className="max-w-full h-auto rounded-lg shadow-sm"
+                            />
+                        )
+                    },
+                }}
+            >
+                {content}
+            </ReactMarkdown>
         </div>
     )
 }
@@ -209,24 +211,33 @@ function CodeBlock({ code, language, isDark }) {
     const copyCode = () => {
         navigator.clipboard.writeText(code)
         setCopied(true)
-        setTimeout(() => {
-            setCopied(false)
-        }, 2000)
-    };
+        setTimeout(() => setCopied(false), 2000)
+    }
 
     return (
-        <div className="relative">
-            <div className="flex items-center mb-2">
-                <LuCode size={16} className="dark:text-gray-400" />
-                <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">{language || 'Code'}</span>
-                <button onClick={copyCode} className="ml-auto flex items-center" aria-label='Copy code'>
+        <div className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 my-2">
+            <div className="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-2">
+                    <LuCode size={14} className="text-gray-500 dark:text-gray-400" />
+                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                        {language || 'code'}
+                    </span>
+                </div>
+                <button
+                    onClick={copyCode}
+                    className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors cursor-pointer"
+                    aria-label="Copy code"
+                >
                     {copied ? (
-                        <LuCheck size={16} className="text-green-500" />
+                        <>
+                            <LuCheck size={13} className="text-green-500" />
+                            <span className="text-green-500">Copied!</span>
+                        </>
                     ) : (
-                        <LuCopy size={16} className="text-gray-500 dark:text-gray-400" />
-                    )}
-                    {copied && (
-                        <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">Copied!</span>
+                        <>
+                            <LuCopy size={13} />
+                            <span>Copy</span>
+                        </>
                     )}
                 </button>
             </div>
@@ -234,17 +245,20 @@ function CodeBlock({ code, language, isDark }) {
                 language={language}
                 style={isDark ? oneDark : oneLight}
                 customStyle={{
-                    borderRadius: '8px',
+                    margin: 0,
+                    borderRadius: 0,
                     padding: '16px',
-                    marginTop: '8px',
-                    backgroundColor: isDark ? '#282c34' : '#f9f9f9',
+                    fontSize: '13px',
+                    lineHeight: '1.6',
+                    backgroundColor: isDark ? '#1e2433' : '#f8f9fa',
                 }}
                 showLineNumbers
+                lineNumberStyle={{ color: isDark ? '#4a5568' : '#cbd5e0', minWidth: '2.5em' }}
             >
                 {code}
             </SyntaxHighlighter>
         </div>
-    );
+    )
 }
- 
+
 export default AIResponsePreview
