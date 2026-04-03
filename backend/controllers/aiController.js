@@ -58,7 +58,7 @@ const generateInterviewQuestions = async (req, res) => {
         const prompt = questionAnswerPrompt(sanitizedRole, sanitizedExperience, sanitizedTopics, parsedCount);
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash-lite",
+            model: "gemini-3.1-flash-lite-preview",
             generationConfig: {
                 responseMimeType: "application/json",
                 responseSchema: QUESTIONS_SCHEMA,
@@ -119,7 +119,7 @@ const generateConceptExplanation = async (req, res) => {
         const prompt = conceptExplainPrompt(sanitizedQuestion);
 
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash-lite",
+            model: "gemini-3.1-flash-lite-preview",
             generationConfig: {
                 responseMimeType: "application/json",
                 responseSchema: EXPLANATION_SCHEMA,

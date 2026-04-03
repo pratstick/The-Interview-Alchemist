@@ -42,7 +42,7 @@ The Interview Alchemist transforms your interview preparation with Google Gemini
 | **Frontend** | React 19, React Router 7, Tailwind CSS 4, Framer Motion |
 | **Backend** | Node.js, Express 5, Mongoose |
 | **Database** | MongoDB Atlas |
-| **AI** | Google Gemini (`gemini-2.0-flash`) via `@google/generative-ai` |
+| **AI** | Google Gemini (`gemini-3.1-flash-lite-preview`) via `@google/generative-ai` |
 | **Auth** | JWT (httpOnly cookie) + CSRF tokens |
 
 ---
