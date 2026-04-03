@@ -93,7 +93,7 @@ const Dashboard = () => {
             </div>
             <div>
               <div className="text-2xl font-bold text-gray-900">{totalQuestions}</div>
-              <div className="text-xs text-gray-500 font-medium">Total Q&amp;A</div>
+              <div className="text-xs text-gray-500 font-medium">Total Q&A</div>
             </div>
           </div>
           <div className="bg-white rounded-xl p-5 shadow border border-amber-100 flex items-center gap-4">
