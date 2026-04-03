@@ -53,13 +53,8 @@ const Login = ({ setCurrentPage }) => {
         password,
     });
 
-    const { token } = response.data;
-
-    if (token) {
-      localStorage.setItem("token", token);
-      updateUser(response.data);
-      navigate("/dashboard");
-    }
+    updateUser(response.data);
+    navigate("/dashboard");
     } catch (error) {
       let errorMessage = "Something went wrong. Please try again";
       

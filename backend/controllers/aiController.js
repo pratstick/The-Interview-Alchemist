@@ -1,7 +1,28 @@
-const { GoogleGenAI } = require("@google/genai");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { questionAnswerPrompt, conceptExplainPrompt } = require("../utils/prompts");
 
-const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
+const QUESTIONS_SCHEMA = {
+    type: "array",
+    items: {
+        type: "object",
+        properties: {
+            question: { type: "string" },
+            answer: { type: "string" },
+        },
+        required: ["question", "answer"],
+    },
+};
+
+const EXPLANATION_SCHEMA = {
+    type: "object",
+    properties: {
+        title: { type: "string" },
+        explanation: { type: "string" },
+    },
+    required: ["title", "explanation"],
+};
 
 // @desc Generate interview questions and answers using Google Gemini
 // @route POST /api/ai/generate-questions
@@ -18,26 +39,31 @@ const generateInterviewQuestions = async (req, res) => {
         ) {
             return res.status(400).json({ success: false, message: 'All fields are required' });
         }
-        const prompt = questionAnswerPrompt(role, experience, topicsToFocus, numberOfQuestions);
 
-        const response = await ai.models.generateContent({
+        // Validate and sanitize inputs
+        const sanitizedRole = String(role).replace(/[`"\\]/g, '').slice(0, 100);
+        const sanitizedExperience = String(experience).replace(/[`"\\]/g, '').slice(0, 50);
+        const sanitizedTopics = String(topicsToFocus).replace(/[`"\\]/g, '').slice(0, 200);
+        const parsedCount = parseInt(numberOfQuestions, 10);
+        if (isNaN(parsedCount) || parsedCount < 1 || parsedCount > 20) {
+            return res.status(400).json({ success: false, message: 'numberOfQuestions must be between 1 and 20' });
+        }
+
+        const prompt = questionAnswerPrompt(sanitizedRole, sanitizedExperience, sanitizedTopics, parsedCount);
+
+        const model = genAI.getGenerativeModel({
             model: "gemini-2.0-flash-lite",
-            contents: prompt,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: QUESTIONS_SCHEMA,
+            },
         });
 
-        let rawText = response.text;
-
-        // Clean the response text: Remove ``` json and ``` from the response
-        const cleanedText = rawText
-           .replace(/^\s*```(?:json)?\s*/i, "")   // Remove starting ``` or ```json (case-insensitive)
-           .replace(/\s*```\s*$/i, "")            // Remove ending ```
-           .trim();
-
-        // Now parse the cleaned text as JSON
-        const data = JSON.parse(cleanedText);
+        const result = await model.generateContent(prompt);
+        const data = JSON.parse(result.response.text());
         res.status(200).json(data);
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Failed to generate questions', error: error.message });
+        res.status(500).json({ success: false, message: 'Failed to generate questions' });
     }
 };
 
@@ -52,24 +78,25 @@ const generateConceptExplanation = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Question is required' });
         }
 
-        const prompt = conceptExplainPrompt(question);
+        const sanitizedQuestion = String(question).replace(/[`"\\]/g, '').slice(0, 500);
 
-        const response = await ai.models.generateContent({
+        const prompt = conceptExplainPrompt(sanitizedQuestion);
+
+        const model = genAI.getGenerativeModel({
             model: "gemini-2.0-flash-lite",
-            contents: prompt,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: EXPLANATION_SCHEMA,
+            },
         });
-        let rawText = response.text;
-        // Clean the response text: Remove ``` json and ``` from the response
-        const cleanedText = rawText
-            .replace(/^\s*```(?:json)?\s*/i, "")   // Remove starting ``` or ```json (case-insensitive)
-            .replace(/\s*```\s*$/i, "")            // Remove ending ```
-            .trim();
-        const data = JSON.parse(cleanedText);
-        res.status(200).json(data); 
+
+        const result = await model.generateContent(prompt);
+        const data = JSON.parse(result.response.text());
+        res.status(200).json(data);
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Failed to generate explanation', error: error.message });
+        res.status(500).json({ success: false, message: 'Failed to generate explanation' });
     }
-}
+};
 
 
 

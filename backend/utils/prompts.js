@@ -1,5 +1,3 @@
-const Question = require("../models/Question");
-
 const questionAnswerPrompt = (role, experience, topicsToFocus, numberOfQuestions) => (`
     You are an AI assistant helping a user prepare for a job interview which generates technical interview questions and answers.
 

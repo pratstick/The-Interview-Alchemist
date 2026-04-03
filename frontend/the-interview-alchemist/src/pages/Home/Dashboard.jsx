@@ -7,10 +7,11 @@ import SummaryCard from "../../components/Cards/SummaryCard";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import moment from "moment";
+import { format } from "date-fns";
 import CreateSessionForm from "./CreateSessionForm";
 import DeleteAlertContent from "../../components/DeleteAlertContent";
 import Modal from "../../components/Modal";
+import emptyStateImg from "../../assets/empty-state.svg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const Dashboard = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [sessions, setSessions] = useState([]);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({ open: false, data: null });
-  const [error, setError] = useState(null);
 
   // For search/filter
   const [search, setSearch] = useState("");
@@ -111,8 +111,8 @@ const Dashboard = () => {
         {filteredSessions.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16">
             <img
-              src="https://illustrations.popsy.co/amber/team-idea.svg"
-              alt=" Source: popsy.co"
+              src={emptyStateImg}
+              alt="No interview sessions found"
               className="w-40 mb-4"
             />
             <p className="text-gray-500 mb-2">No interview sessions found.</p>
@@ -136,7 +136,7 @@ const Dashboard = () => {
                 description={data?.description || ""}
                 lastUpdated={
                   data?.updatedAt
-                    ? moment(data?.updatedAt).format("Do MMM YYYY")
+                    ? format(new Date(data?.updatedAt), "do MMM yyyy")
                     : ""
                 }
                 onSelect={() => navigate(`/interview-prep/${data?._id}`)}

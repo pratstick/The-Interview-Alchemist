@@ -2,14 +2,11 @@ import React, { useState, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
-import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
 import { validateEmail } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
-import uploadImage from '../../utils/uploadImage';
 
 const SignUp = ({ setCurrentPage }) => {
-  const [profilePic, setProfilePic] = useState(null);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,8 +19,6 @@ const SignUp = ({ setCurrentPage }) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    let profileImageUrl = "";
     
     // Validation
     if (!fullName.trim()) {
@@ -53,25 +48,13 @@ const SignUp = ({ setCurrentPage }) => {
     setError("");
     
     try {
-      // Signup API call
-      if (profilePic) {
-        const imgUploadRes = await uploadImage(profilePic);
-        profileImageUrl = imgUploadRes.imageUrl || "";
-      }
-
       const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         name: fullName,
         email,
         password,
-        profileImageUrl
       });
-      const { token } = response.data;
-      if (token) {
-        localStorage.setItem("token", token);
-        updateUser(response.data);
-        navigate("/dashboard");
-      }
-
+      updateUser(response.data);
+      navigate("/dashboard");
 
     } catch (error) {
       console.error(error);
@@ -101,10 +84,6 @@ const SignUp = ({ setCurrentPage }) => {
       </div>
 
       <form onSubmit={handleSignUp} className='space-y-6'>
-        <div className='flex justify-center mb-4'>
-          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
-        </div>
-
         <div className='space-y-4'>
           <Input
             value={fullName} 
