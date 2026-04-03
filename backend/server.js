@@ -76,7 +76,11 @@ const apiLimiter = rateLimit({
 });
 
 // Routes
-app.use("/api/auth", authLimiter, authRoutes);
+// authLimiter guards only login/register (brute-force targets).
+// All other auth endpoints (profile, logout, upload-image) use the general apiLimiter.
+app.use("/api/auth/login", authLimiter);
+app.use("/api/auth/register", authLimiter);
+app.use("/api/auth", apiLimiter, authRoutes);
 app.use("/api/sessions", apiLimiter, sessionRoutes);
 app.use("/api/questions", apiLimiter, questionRoutes);
 app.use("/api/progress", apiLimiter, progressRoutes);

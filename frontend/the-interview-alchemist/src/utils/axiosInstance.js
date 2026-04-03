@@ -42,6 +42,9 @@ axiosInstance.interceptors.response.use(
             // If the token is expired or invalid, redirect to login
             window.location.href = '/';
         }
+        else if (error.response && error.response.status === 429) {
+            console.warn('Rate limit reached. Please slow down and try again later.');
+        }
         else if (error.response && error.response.status === 500) {
             console.error('Server error:Please Try Again', error.response.data);
         }
