@@ -18,6 +18,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { UserContext } from "../../context/UserContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
+import { getProfileImageUrl } from "../../utils/helper";
 import toast from "react-hot-toast";
 
 // ── Stat card ────────────────────────────────────────────────────────────────
@@ -220,7 +221,7 @@ const UserProfile = () => {
         {/* ── Profile header ── */}
         <div className="bg-white rounded-2xl shadow border border-amber-100 p-6 mb-8 flex flex-col sm:flex-row items-center sm:items-start gap-5">
           <img
-            src={user?.profileImageUrl || "https://picsum.photos/200"}
+            src={getProfileImageUrl(user?.profileImageUrl)}
             alt="Profile"
             className="w-20 h-20 rounded-full border-4 border-amber-200 object-cover shadow"
           />
