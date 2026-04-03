@@ -17,6 +17,7 @@ const INTERVIEW_TIPS = [
   "Simulate real interviews with a timer.",
   "Take notes on every session and review mistakes.",
   "Stay calm and ask clarifying questions if needed.",
+  "Research the company's tech stack before the interview.",
 ];
 
 const LandingPage = () => {
@@ -26,6 +27,7 @@ const LandingPage = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
   const [showTip, setShowTip] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const handleCTA = () => {
     if (!user) {
@@ -41,6 +43,13 @@ const LandingPage = () => {
       setShowTip((prev) => (prev + 1) % INTERVIEW_TIPS.length);
     }, 7000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Show/hide scroll-to-top button reactively
+  React.useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 200);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -60,7 +69,6 @@ const LandingPage = () => {
                 alt="The Interview Alchemist Logo"
                 className="h-9 w-9"
               />
-              {/*<img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Gemini AI" className="w-7 h-7 mr-1" />*/}
               The Interview Alchemist
             </div>
             {user ? (
@@ -153,7 +161,6 @@ const LandingPage = () => {
                     className='bg-[#FFFEF8] p-6 rounded-xl shadow-xs hover:shadow-lg shadow-amber-100 transition border border-amber-100 flex flex-col items-center text-center group'
                   >
                     <div className="mb-3">
-                      {/* Example icon, replace with your own or from feature.icon */}
                       <span className="inline-block bg-amber-100 text-amber-600 rounded-full p-3 text-2xl group-hover:scale-110 transition-transform">
                         {feature.icon || <LuSparkles />}
                       </span>
@@ -185,17 +192,18 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* Scroll to top button */}
-      <button
-        className="fixed bottom-8 right-8 z-50 bg-amber-400 hover:bg-amber-500 text-white rounded-full p-3 shadow-lg transition-all"
-        style={{ display: window.scrollY > 200 ? "block" : "none" }}
-        aria-label="Scroll to top"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-        </svg>
-      </button>
+      {/* Scroll to top button — only visible after scrolling 200px */}
+      {showScrollTop && (
+        <button
+          className="fixed bottom-8 right-8 z-50 bg-amber-400 hover:bg-amber-500 text-white rounded-full p-3 shadow-lg transition-all"
+          aria-label="Scroll to top"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
+      )}
 
       {/* Footer */}
       <div className='text-sm bg-gray-50 text-secondary text-center p-5 mt-5 border-t border-gray-200'>
