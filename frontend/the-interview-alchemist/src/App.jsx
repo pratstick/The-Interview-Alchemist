@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Home/Dashboard';
 import InterviewPrep from './pages/InterviewPrep/InterviewPrep';
+import UserProfile from './pages/Profile/UserProfile';
 import UserProvider from './context/UserContext';
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/interview-prep/:sessionId" element={<InterviewPrep />} />
+            <Route path="/profile" element={<UserProfile />} />
           </Routes>
           <Toaster
             toastOptions={{

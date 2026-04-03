@@ -8,6 +8,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const sessionRoutes = require("./routes/sessionRoutes");
 const questionRoutes = require("./routes/questionRoutes");
+const progressRoutes = require("./routes/progressRoutes");
 const { protect } = require("./middlewares/authMiddleware");
 const { generateInterviewQuestions, generateConceptExplanation } = require("./controllers/aiController");
 
@@ -78,6 +79,7 @@ const apiLimiter = rateLimit({
 app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/sessions", apiLimiter, sessionRoutes);
 app.use("/api/questions", apiLimiter, questionRoutes);
+app.use("/api/progress", apiLimiter, progressRoutes);
 
 app.use("/api/ai/generate-questions", aiLimiter, protect, generateInterviewQuestions);
 app.use("/api/ai/generate-explanation", aiLimiter, protect, generateConceptExplanation);

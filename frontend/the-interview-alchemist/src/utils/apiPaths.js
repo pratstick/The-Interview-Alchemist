@@ -32,4 +32,9 @@ export const API_PATHS = {
         PIN: (id) => `/api/questions/${id}/pin`, // Pin a question
         UPDATE_NOTE: (id) => `/api/questions/${id}/note`, // Update a question's note
     },
+
+    PROGRESS: {
+        GET_STATS: `/api/progress/stats`,
+        UPDATE_GOALS: `/api/progress/goals`,
+    },
 };    
