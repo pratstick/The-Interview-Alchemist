@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ProfileInfoCard from "../Cards/ProfileInfoCard";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
@@ -7,6 +7,10 @@ import { LuSun, LuMoon } from "react-icons/lu";
 const Navbar = () => {
     const { theme, toggleTheme } = useTheme();
 
+import { UserContext } from "../../context/UserContext";
+
+const Navbar = () => {
+    const { user } = useContext(UserContext);
     return (
         <div className="h-16 bg-neutral-50 dark:bg-gray-900 shadow dark:shadow-gray-800 flex items-center justify-between px-4 sm:px-6">
             <div className="flex items-center gap-2 sm:gap-3">
@@ -31,6 +35,14 @@ const Navbar = () => {
                         <LuMoon size={20} />
                     )}
                 </button>
+                {user && (
+                    <Link
+                        to="/profile"
+                        className="hidden sm:flex items-center gap-1 text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors"
+                    >
+                        My Profile
+                    </Link>
+                )}
                 <ProfileInfoCard />
             </div>
         </div>    

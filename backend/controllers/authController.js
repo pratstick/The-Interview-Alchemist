@@ -70,6 +70,7 @@ const registerUser = async (req, res) => {
             profileImageUrl: user.profileImageUrl,
         });
     } catch (error) {
+        console.error('Register error:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -110,6 +111,7 @@ const loginUser = async (req, res) => {
             profileImageUrl: user.profileImageUrl,
         });
     }catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -125,6 +127,7 @@ const getUserProfile = async (req, res) => {
         }
         res.status(200).json(user);
     } catch (error) {
+        console.error('Get profile error:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
