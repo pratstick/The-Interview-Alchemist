@@ -71,11 +71,11 @@ const CreateSessionForm = () => {
     };
 
     return (
-        <div className="w-full max-w-md mx-auto bg-white p-7 flex flex-col justify-center rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-black">
+        <div className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 p-7 flex flex-col justify-center rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-black dark:text-gray-100">
                 Start a new Interview Journey
             </h3>
-            <p className="text-xs text-slate-700 mt-[5px] mb-3">
+            <p className="text-xs text-slate-700 dark:text-slate-400 mt-[5px] mb-3">
                 Fill out a few quick details to get started and unlock the power of The Interview Alchemist
             </p>
 

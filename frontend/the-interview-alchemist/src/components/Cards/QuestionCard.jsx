@@ -27,14 +27,14 @@ const QuestionCard = ({
     };
 
     return (
-        <div className='bg-white rounded-lg py-4 px-5 mb-4 overflow-hidden shadow-xl shadow-gray-100/70 border border-gray-100/60 group'>
+        <div className='bg-white dark:bg-gray-800 rounded-lg py-4 px-5 mb-4 overflow-hidden shadow-xl shadow-gray-100/70 dark:shadow-gray-900/50 border border-gray-100/60 dark:border-gray-700/60 group'>
             <div className='flex items-start justify-between cursor-pointer'>
                 <div className='flex items-start gap-3.5'>
-                    <span className='text-xs md:text-[15px] font-semibold text-gray-400 leading-[18px]'>
+                    <span className='text-xs md:text-[15px] font-semibold text-gray-400 dark:text-gray-500 leading-[18px]'>
                         Q
                     </span>
                     <h3 
-                        className='text-xs md:text-[14px] font-medium text-gray-800 mr-0 md:mr-4'
+                        className='text-xs md:text-[14px] font-medium text-gray-800 dark:text-gray-200 mr-0 md:mr-4'
                         onClick={toggleExpand}
                     >
                         {question}
@@ -43,13 +43,13 @@ const QuestionCard = ({
                 <div className='flex items-center justify-end ml-4 relative'>
                     <div className={`flex ${isExpanded ? "md:flex" : "md:hidden group-hover:flex"}`}>
                         <button 
-                            className='flex items-center gap-2 text-xs text-indigo-800 font-medium bg-indigo-50 px-3 py-1 rounded mr-2 text-nowrap border border-indigo-100 hover:border-indigo-200 hover:bg-indigo-100 cursor-pointer'
+                            className='flex items-center gap-2 text-xs text-indigo-800 dark:text-indigo-300 font-medium bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded mr-2 text-nowrap border border-indigo-100 dark:border-indigo-800 hover:border-indigo-200 dark:hover:border-indigo-700 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 cursor-pointer'
                             onClick={onTogglePin}
                         >
                             {isPinned ? <LuPinOff className='text-xs'/> : <LuPin className='text-xs'/>}
                         </button>
                         <button
-                            className='flex items-center gap-2 text-xs text-cyan-800 font-medium bg-cyan-50 px-3 py-1 rounded text-nowrap border border-cyan-100 hover:border-cyan-200 hover:bg-cyan-100 cursor-pointer'
+                            className='flex items-center gap-2 text-xs text-cyan-800 dark:text-cyan-300 font-medium bg-cyan-50 dark:bg-cyan-900/30 px-3 py-1 rounded text-nowrap border border-cyan-100 dark:border-cyan-800 hover:border-cyan-200 dark:hover:border-cyan-700 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 cursor-pointer'
                             onClick={() => {
                                 onLearnMore();
                                 setIsExpanded(true);
@@ -60,7 +60,7 @@ const QuestionCard = ({
                         </button>
                     </div>
                     <button
-                        className='text-gray-400 hover:text-gray-500 cursor-pointer'
+                        className='text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 cursor-pointer'
                         onClick={toggleExpand}
                     >
                         <LuChevronDown
@@ -74,7 +74,7 @@ const QuestionCard = ({
                 className={`overflow-hidden transition-all duration-300 ease-in-out`}
                 style={{ maxHeight: `${height}px` }}
             >
-                <div ref={contentRef} className='mt-4 text-gray-700 bg-gray-50 px-5 py-3 rounded-lg'>
+                <div ref={contentRef} className='mt-4 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900/50 px-5 py-3 rounded-lg'>
                     <AIResponsePreview content={answer} />
                 </div>
             </div>

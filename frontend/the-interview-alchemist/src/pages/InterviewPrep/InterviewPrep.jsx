@@ -165,7 +165,7 @@ const InterviewPrep = () => {
       {RoleHeader}
 
       <main className='relative z-10 mx-auto pt-6 pb-8 px-4 md:px-0 max-w-5xl'>
-        <h2 className='text-xl font-bold text-neutral-900 mb-2'>Interview Q&amp;A</h2>
+        <h2 className='text-xl font-bold text-neutral-900 dark:text-gray-100 mb-2'>Interview Q&amp;A</h2>
 
         {/* Loader and empty/error state for session/questions */}
         {loadingSession ? (
@@ -191,7 +191,7 @@ const InterviewPrep = () => {
               alt="No questions"
               className="w-40 mb-4"
             />
-            <p className="text-gray-500 mb-2">No questions found for this session.</p>
+            <p className="text-gray-500 dark:text-gray-400 mb-2">No questions found for this session.</p>
             <button
               className="bg-blue-600 text-white px-4 py-2 rounded min-w-[120px]"
               onClick={uploadMoreQuestions}
@@ -224,7 +224,7 @@ const InterviewPrep = () => {
                     className="mb-6"
                     tabIndex={0}
                   >
-                    <div className="bg-white rounded-lg shadow p-3 md:p-3 transition hover:shadow-lg">
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 md:p-3 transition hover:shadow-lg dark:shadow-gray-900">
                       <QuestionCard
                         question={data?.question || ""}
                         answer={data?.answer || ""}
@@ -238,7 +238,7 @@ const InterviewPrep = () => {
                     {!isLoading && sessionData?.questions?.length === index + 1 && (
                       <div className='flex items-center justify-center mt-4'>
                         <button
-                          className='w-full sm:w-auto min-w-[120px] flex items-center gap-2 text-xs text-cyan-800 font-medium bg-cyan-50 px-3 py-2 rounded text-nowrap border border-cyan-100 hover:border-cyan-200 hover:bg-cyan-100 cursor-pointer'
+                          className='w-full sm:w-auto min-w-[120px] flex items-center gap-2 text-xs text-cyan-800 dark:text-cyan-300 font-medium bg-cyan-50 dark:bg-cyan-900/30 px-3 py-2 rounded text-nowrap border border-cyan-100 dark:border-cyan-800 hover:border-cyan-200 dark:hover:border-cyan-700 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 cursor-pointer'
                           disabled={isUpdateLoader || isLoading}
                           onClick={uploadMoreQuestions}
                           aria-label="Add More Questions"

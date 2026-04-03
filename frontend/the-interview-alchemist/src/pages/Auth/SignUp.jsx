@@ -75,10 +75,10 @@ const SignUp = ({ setCurrentPage }) => {
   };
   
   return (
-    <div className='w-full max-w-md mx-auto p-8 bg-white rounded-xl shadow-sm'>
+    <div className='w-full max-w-md mx-auto p-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm'>
       <div className='mb-8 text-center'>
-        <h3 className='text-2xl font-semibold text-gray-900'>Create an account</h3>
-        <p className='text-sm text-gray-600 mt-2'>
+        <h3 className='text-2xl font-semibold text-gray-900 dark:text-gray-100'>Create an account</h3>
+        <p className='text-sm text-gray-600 dark:text-gray-400 mt-2'>
           Join us today by entering your details below.
         </p>
       </div>
@@ -137,7 +137,7 @@ const SignUp = ({ setCurrentPage }) => {
           )}
         </button>
 
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
           Already have an account?{' '}
           <button 
             type="button"
