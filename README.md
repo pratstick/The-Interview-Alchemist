@@ -1,4 +1,4 @@
-# 🧙‍♂️ The Interview Alchemist
+# The Interview Alchemist
 
 <div align="center">
 
@@ -7,77 +7,70 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
-[![Powered by Gemini](https://img.shields.io/badge/Powered%20by-Google%20Gemini-8E75B2?logo=google&logoColor=white)](https://ai.google.dev/)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-API-8E75B2?logo=google&logoColor=white)](https://ai.google.dev/)
 
-**An intelligent, full-stack interview preparation workspace built with React 19, Express 5, and Google Gemini AI.**  
-Transform vague interview preparation into targeted mastery with role-calibrated questions, conceptual deep-dives, code breakdowns, and gamified progress tracking.
+An AI-driven technical interview preparation workspace built with React 19, Express 5, and Google Gemini AI.
 
-[✨ Key Features](#-key-features) • [📸 Visual Tour](#-visual-tour) • [🏗️ Architecture](#️-system-architecture) • [🚀 Quick Start](#-quick-start) • [📡 API Reference](#-api-reference) • [📄 Resume Summary](#-resume--portfolio-summary)
+[Features](#features) • [Screenshots](#screenshots) • [System Architecture](#system-architecture) • [Technology Stack](#technology-stack) • [Getting Started](#getting-started) • [API Reference](#api-reference) • [License](#license)
 
 </div>
 
 ---
 
-## 🌟 Overview
+## Overview
 
-**The Interview Alchemist** is an AI-native web application designed to eliminate generic interview practice. By integrating Google Gemini's structured output generation (`gemini-3.1-flash-lite-preview`), the platform dynamically crafts role-specific questions tailored to seniority and technical focus areas. Users can bookmark critical concepts, explore instant pedagogical deep dives with interactive code syntax highlighting, track study streaks, and monitor preparation metrics through an intuitive, theme-aware dashboard.
+The Interview Alchemist is a full-stack platform engineered to deliver structured, role-specific technical interview preparation. Utilizing Google Gemini with structured JSON output schemas (`gemini-3.1-flash-lite-preview`), the system generates seniority-calibrated question sets and benchmark responses based on user-defined roles and focus topics. Candidates can bookmark key questions, access pedagogical concept explanations with syntax-highlighted code blocks, manage study targets, and analyze progress across dark and light environments.
 
 ---
 
-## 📸 Visual Tour
+## Screenshots
 
 <div align="center">
 
-### 🎯 Landing & Exploration
+### Application Landing
 ![Landing Page](docs/screenshots/landing-page.png)
-*Modern responsive landing page featuring interview tips rotation, interactive feature highlights, and frictionless authentication.*
 
 ---
 
-### 📊 Modern Dashboard (Light & Dark Theme)
+### Dashboard (Light and Dark Themes)
 | Light Mode | Dark Mode |
 |:---:|:---:|
 | ![Dashboard Light](docs/screenshots/dashboard-light.png) | ![Dashboard Dark](docs/screenshots/dashboard-dark.png) |
 
-*Full-featured prep dashboard showing active sessions, real-time search filtering, key metrics, and quick session creation.*
-
 ---
 
-### 🧠 Interactive Interview Workspace & AI Concept Drawer
-| Adaptive Q&A Practice Canvas | Real-Time AI Explanation Drawer |
+### Interview Workspace & Conceptual Deep-Dive Drawer
+| Question Accordion Canvas | AI Explanation Drawer with Syntax Highlighting |
 |:---:|:---:|
 | ![Interview Prep](docs/screenshots/interview-prep.png) | ![AI Drawer](docs/screenshots/ai-explanation-drawer.png) |
 
-*Collapsible question cards with pin/bookmark management and slide-out AI drawers delivering deep conceptual breakdowns with Prism syntax highlighting.*
-
 ---
 
-### 📈 Learning Analytics, Goals & Achievements
-![Profile & Analytics](docs/screenshots/profile-analytics.png)
-*Gamified progress tracking with daily/weekly target editors, study streaks, and milestone badges.*
+### Learning Analytics, Goals & Achievements
+![Profile and Analytics](docs/screenshots/profile-analytics.png)
 
 </div>
 
 ---
 
-## ✨ Key Features
+## Features
 
-- **🎯 Role-Calibrated Question Generation:** Dynamically generates structured technical interview questions and sample answers based on exact job title, years of experience, and custom focus topics.
-- **🧠 Pedagogical "Learn More" Drawer:** Click any question to open an AI explanation drawer that breaks down underlying concepts with beginner-friendly teaching models and code examples.
-- **📌 Question Pinning & Revision Library:** Bookmark high-yield questions for rapid pre-interview revision.
-- **💻 Code Syntax Highlighting:** Integrated markdown engine supporting JavaScript, TypeScript, Python, Java, SQL, Bash, and CSS with dual light/dark themes.
-- **🏆 Study Streaks & Gamified Achievements:** Tracks daily engagement, consecutive study day streaks, question counts, and unlocks achievement badges.
-- **🎯 Dynamic Goal Tracking:** Set and adjust daily session targets and weekly question benchmarks with live progress bars.
-- **🌓 Dual-Engine Dark/Light Mode:** Seamless class-based Tailwind CSS v4 theming across all cards, modals, navigation, and code viewers.
-- **🛡️ Enterprise Security Model:** JWT tokens in `httpOnly`, `SameSite=Strict` cookies paired with CSRF double-submit token validation and strict rate-limiting.
+- **Role-Calibrated Question Generation:** Generates structured technical interview question batches tailored to target job titles, experience level, and specific technical competencies.
+- **Pedagogical Explanation Drawer:** Slide-out drawer delivering conceptual breakdowns of interview problems with code illustrations and beginner-friendly teaching models.
+- **Question Bookmarking:** Bookmark and organize critical questions into a personal revision library.
+- **Multi-Language Syntax Highlighting:** Integrated Markdown preview with PrismJS highlighting for JavaScript, TypeScript, Python, Java, SQL, Bash, and CSS.
+- **Study Analytics and Streaks:** Tracks session volume, cumulative question count, consecutive daily study streaks, and milestone achievements.
+- **Adaptive Goal Management:** Configurable daily session goals and weekly question targets with interactive progress visualization.
+- **Dual Theme Support:** Comprehensive class-based Tailwind CSS v4 light and dark themes across all pages and components.
+- **Authentication and Defense in Depth:** Session management via JWT in `httpOnly`, `SameSite=Strict` cookies paired with double-submit CSRF cookie validation and multi-tier rate limiting.
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```mermaid
 graph TD
-    Client["Client: React 19 + Tailwind v4 + Vite"]
+    Client["Client: React 19 + Tailwind CSS v4 (Vite)"]
     Router["React Router 7 SPA"]
     Axios["Axios Interceptor (CSRF + httpOnly Cookies)"]
     
@@ -86,7 +79,7 @@ graph TD
     AuthMiddleware["JWT & Double-Submit CSRF Guard"]
     
     Controllers["Controllers (Sessions, Questions, Progress, AI)"]
-    Gemini["Google Gemini AI API (gemini-3.1-flash-lite)"]
+    Gemini["Google Gemini API (gemini-3.1-flash-lite)"]
     MongoDB[("MongoDB Atlas (Mongoose ODM)")]
     
     Client --> Router
@@ -100,172 +93,153 @@ graph TD
 
 ---
 
-## 🛠️ Tech Stack
+## Technology Stack
 
-| Domain | Technology | Details |
+| Layer | Technology | Purpose |
 |---|---|---|
-| **Frontend** | React 19, Vite 6 | Component-driven SPA with StrictMode |
-| **Routing** | React Router 7 | Client-side routing with protected dashboard routes |
-| **Styling** | Tailwind CSS 4 | Utility-first styling with `@variant dark` support |
-| **Animation & UI** | Framer Motion, Lucide Icons | Fluid layout transitions and SVG iconography |
-| **Markdown & Code** | React Markdown, PrismJS, Remark GFM | Multi-language syntax highlighting |
-| **Backend** | Node.js (18+), Express 5 | RESTful API architecture |
-| **Database** | MongoDB Atlas, Mongoose 8 | Document store with indexing and schema validation |
-| **Artificial Intelligence** | Google Gemini API (`@google/generative-ai`) | Structured JSON schema outputs |
-| **Authentication** | JWT (`jsonwebtoken`), Bcrypt.js | `httpOnly` secure cookies + double-submit CSRF |
-| **Security & Utilities** | Express Rate Limit, Cookie-Parser | DoS protection and brute-force mitigation |
+| **Frontend Framework** | React 19, Vite 6 | Component-based single page application |
+| **Routing** | React Router 7 | Client-side routing and protected view boundaries |
+| **Styling** | Tailwind CSS 4 | Utility-first styling with native class-based dark mode |
+| **Transitions & UI** | Framer Motion, Lucide Icons | Interface animations and vector iconography |
+| **Markdown & Code** | React Markdown, PrismJS, Remark GFM | Code formatting and multi-language syntax highlighting |
+| **Backend Runtime** | Node.js (18+), Express 5 | RESTful API server and middleware pipeline |
+| **Database** | MongoDB Atlas, Mongoose 8 | Document persistence, schema validation, and indexing |
+| **AI Integration** | Google Gemini API (`@google/generative-ai`) | Structured JSON question generation and conceptual breakdown |
+| **Authentication** | JWT (`jsonwebtoken`), Bcrypt.js | Cryptographic hashing and token-based session handling |
+| **Security** | Express Rate Limit, Cookie-Parser | Rate-limiting, brute-force mitigation, and CSRF protection |
 
 ---
 
-## 🚀 Quick Start
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js**: v18.0.0 or higher
-- **MongoDB Atlas**: A connection URI (or local MongoDB instance)
-- **Google Gemini API Key**: Obtainable from [Google AI Studio](https://aistudio.google.com/app/apikey)
+- Node.js 18.0.0 or higher
+- MongoDB Atlas cluster connection URI
+- Google Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
 
-### 1. Clone & Configure
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/pratstick/The-Interview-Alchemist.git
 cd The-Interview-Alchemist
 ```
 
-Create a `backend/.env` file:
+### 2. Configure Environment Variables
+
+Create a `backend/.env` file with the following variables:
 
 ```env
 PORT=8000
 ALLOWED_ORIGIN=http://localhost:5173
-JWT_SECRET=your_super_secret_jwt_key_here
-GOOGLE_API_KEY=your_gemini_api_key_here
+JWT_SECRET=your_jwt_secret_here
+GOOGLE_API_KEY=your_google_gemini_api_key
 MONGO_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
 ```
 
-### 2. Install Dependencies
+### 3. Install Dependencies
 
-Install both backend and frontend dependencies via the root command:
+Install all dependencies across backend and frontend:
 
 ```bash
 npm run install:all
 ```
 
-*(Or install individually inside `/backend` and `/frontend/the-interview-alchemist` via `npm install`)*
+### 4. Run Development Servers
 
-### 3. Run Development Servers
-
-From the repository root:
+From the root directory:
 
 ```bash
-# Terminal 1 — Backend API
+# Terminal 1: Backend API
 npm run dev:backend
 
-# Terminal 2 — Frontend Application
+# Terminal 2: Frontend Application
 npm run dev:frontend
 ```
 
-Open your browser at **`http://localhost:5173`** (API operates at `http://localhost:8000`).
+The frontend client will be available at `http://localhost:5173` and the backend service at `http://localhost:8000`.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 The-Interview-Alchemist/
 ├── backend/
 │   ├── config/
-│   │   └── db.js                 # MongoDB connection with DNS & error handling
+│   │   └── db.js                 # Database connection and network diagnostics
 │   ├── controllers/
-│   │   ├── aiController.js       # Gemini API client & JSON schema validation
+│   │   ├── aiController.js       # Gemini API client and schema enforcement
 │   │   ├── authController.js     # User registration, login, logout, profile
 │   │   ├── progressController.js # Streak calculation, goals, achievements
-│   │   ├── questionController.js # Question bookmarking, notes, append
+│   │   ├── questionController.js # Question bookmarking, notes, append operations
 │   │   └── sessionController.js  # CRUD operations for interview sessions
 │   ├── middlewares/
 │   │   ├── authMiddleware.js     # JWT extraction and validation
-│   │   └── uploadMiddleware.js   # Multer file upload handling
+│   │   └── uploadMiddleware.js   # Multer storage configuration
 │   ├── models/                   # Mongoose schemas (User, Session, Question)
-│   ├── routes/                   # Modular Express route declarations
+│   ├── routes/                   # Express route definitions
 │   ├── utils/
-│   │   └── prompts.js            # Gemini prompt engineering templates
-│   └── server.js                 # Express server configuration & security setup
+│   │   └── prompts.js            # Prompt templates for Gemini models
+│   └── server.js                 # Server entry point and middleware pipeline
 │
 ├── frontend/the-interview-alchemist/
-│   ├── public/                   # Static icons & branding assets
+│   ├── public/                   # Static branding assets
 │   └── src/
-│       ├── assets/               # SVGs, hero illustrations
-│       ├── components/           # Reusable UI (Modals, Drawers, Cards, Loaders)
-│       ├── context/              # UserContext, ThemeContext
+│       ├── assets/               # SVGs and UI illustrations
+│       ├── components/           # Reusable UI components (Modals, Drawers, Cards)
+│       ├── context/              # Context providers (ThemeContext, UserContext)
 │       ├── pages/
-│       │   ├── Auth/             # Login & SignUp modals/pages
-│       │   ├── Home/             # Dashboard & CreateSessionForm
-│       │   ├── InterviewPrep/    # Question cards, AI response drawer
-│       │   ├── Profile/          # Analytics, streaks, achievements, goals
-│       │   └── LandingPage.jsx   # Marketing page with dynamic tips
-│       └── utils/                # Axios interceptors, API endpoints, helpers
+│       │   ├── Auth/             # Login and registration views
+│       │   ├── Home/             # Dashboard and session creation
+│       │   ├── InterviewPrep/    # Question cards, accordion, AI drawer
+│       │   ├── Profile/          # Analytics, streaks, goals, achievements
+│       │   └── LandingPage.jsx   # Marketing and landing interface
+│       └── utils/                # Axios configuration, API paths, utilities
 │
 └── docs/
-    └── screenshots/              # High-resolution application previews
+    └── screenshots/              # Application preview screenshots
 ```
 
 ---
 
-## 📡 API Reference
+## API Reference
 
-All backend API routes are organized under `/api`:
+All endpoints are mounted under `/api`.
 
-### Authentication & User
+### Authentication
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `POST` | `/api/auth/register` | Public | Register new user account |
-| `POST` | `/api/auth/login` | Public | Authenticate user, set JWT & CSRF cookies |
-| `POST` | `/api/auth/logout` | Private | Clear session & CSRF cookies |
+| `POST` | `/api/auth/register` | Public | Register a new user account |
+| `POST` | `/api/auth/login` | Public | Authenticate user and issue JWT and CSRF cookies |
+| `POST` | `/api/auth/logout` | Private | Clear authentication and CSRF cookies |
 | `GET` | `/api/auth/profile` | Private | Retrieve authenticated user profile |
 
-### Interview Sessions
+### Sessions
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `GET` | `/api/sessions/my-sessions` | Private | Fetch all sessions created by logged-in user |
+| `GET` | `/api/sessions/my-sessions` | Private | Fetch all sessions belonging to the user |
 | `POST` | `/api/sessions/create` | Private | Create a new session with initial questions |
-| `GET` | `/api/sessions/:id` | Private | Fetch session details and populated questions |
-| `DELETE` | `/api/sessions/:id` | Private | Delete a session and associated questions |
+| `GET` | `/api/sessions/:id` | Private | Retrieve session details with populated questions |
+| `DELETE` | `/api/sessions/:id` | Private | Delete a session and its associated questions |
 
-### Questions & AI
+### Questions and AI
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `POST` | `/api/questions/add` | Private | Append newly generated questions to a session |
-| `POST` | `/api/questions/:id/pin` | Private | Toggle question pin/bookmark status |
+| `POST` | `/api/questions/add` | Private | Append additional questions to an existing session |
+| `POST` | `/api/questions/:id/pin` | Private | Toggle pin status on a question |
 | `POST` | `/api/questions/:id/note` | Private | Update personal notes on a question |
-| `POST` | `/api/ai/generate-questions` | Private | Generate structured Q&A batch using Gemini |
-| `POST` | `/api/ai/generate-explanation`| Private | Generate deep pedagogical explanation with code |
+| `POST` | `/api/ai/generate-questions` | Private | Generate structured question batch via Gemini |
+| `POST` | `/api/ai/generate-explanation` | Private | Generate conceptual explanation with code examples |
 
-### Progress & Gamification
+### Progress and Analytics
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
-| `GET` | `/api/progress/stats` | Private | Calculate study streaks, milestones & stats |
+| `GET` | `/api/progress/stats` | Private | Calculate study streaks, milestones, and statistics |
 | `PUT` | `/api/progress/goals` | Private | Update daily session and weekly question goals |
 
 ---
 
-## 📄 Resume / Portfolio Summary
-
-> **Use the section below to copy and paste directly into your resume, portfolio, or LinkedIn profile!**
-
-### 💼 Bullet Points for Software Engineer / Full-Stack Engineer
-
-- **The Interview Alchemist — Full-Stack AI Interview Preparation Platform** *(React 19, Tailwind CSS 4, Node.js, Express, MongoDB, Google Gemini API)*
-  - Engineered an end-to-end AI-powered technical interview preparation web platform that generates role- and seniority-calibrated questions with structured JSON output schemas via Google Gemini (`gemini-3.1-flash-lite`).
-  - Built an interactive pedagogical study drawer with multi-language code syntax highlighting (PrismJS) and markdown formatting, allowing candidates to deep-dive into complex architectural concepts.
-  - Architected a robust security model combining JWTs in `httpOnly`, `SameSite=Strict` cookies, double-submit cookie CSRF defense, and tier-specific rate-limiting for auth, general API, and AI generation endpoints.
-  - Implemented an analytics and gamification engine tracking daily study streaks, customizable weekly targets, and milestone badges across persistent MongoDB collections.
-  - Designed an accessible, dual-theme UI (Light & Dark mode) adhering to WCAG contrast standards using Tailwind CSS v4, Framer Motion animations, and responsive card layouts.
-
-### 🎤 Interview Elevator Pitch (30 Seconds)
-
-> *"I built **The Interview Alchemist**, a full-stack AI platform designed to make technical interview prep structured and role-specific rather than generic. On the frontend, I used **React 19** and **Tailwind CSS 4** with responsive glassmorphism UI, code syntax highlighting, and an analytics dashboard with study streaks. On the backend, I built an **Express 5** API backed by **MongoDB Atlas** that interfaces with **Google Gemini** using strict JSON response schemas to guarantee valid Q&A formats. I paid strong attention to production security—implementing `httpOnly` JWT sessions with double-submit CSRF tokens and multi-tier rate limiting—as well as comprehensive dark mode accessibility across all components."*
-
----
-
-## 📄 License
+## License
 
 This project is licensed under the [GNU General Public License v3.0](LICENSE).
