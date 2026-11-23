@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-import { getProfileImageUrl } from '../../utils/helper';
+import { getProfileImageUrl, FALLBACK_AVATAR } from '../../utils/helper';
 
 const ProfileInfoCard = () => {
     const { user, logoutUser } = useContext(UserContext);
@@ -18,6 +18,7 @@ const ProfileInfoCard = () => {
                 <img
                     src={getProfileImageUrl(user.profileImageUrl)}
                     alt="Profile"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = FALLBACK_AVATAR; }}
                     className="w-9 h-9 rounded-full object-cover border border-gray-300 dark:border-gray-600"
                 />
                 <span className="hidden md:block text-sm font-medium text-gray-800 dark:text-gray-200">

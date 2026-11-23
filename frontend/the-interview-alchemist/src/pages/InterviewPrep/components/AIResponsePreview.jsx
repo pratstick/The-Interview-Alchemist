@@ -31,12 +31,13 @@ const AIResponsePreview = ({ content }) => {
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                    code({ inline, className, children }) {
+                    code({ className, children, ...props }) {
                         const match = /language-(\w+)/.exec(className || '')
                         const language = match ? match[1] : ''
+                        const isBlock = match || String(children).includes('\n')
 
-                        // inline is true for backtick spans; block code always has a language class
-                        if (inline || !match) {
+                        // inline is true for short inline backtick spans without linebreaks
+                        if (!isBlock) {
                             return (
                                 <code className="px-1.5 py-0.5 bg-orange-50 dark:bg-gray-700 text-orange-700 dark:text-orange-300 rounded text-[13px] font-mono border border-orange-100 dark:border-gray-600">
                                     {children}
@@ -47,7 +48,7 @@ const AIResponsePreview = ({ content }) => {
                         return (
                             <CodeBlock
                                 code={String(children).replace(/\n$/, '')}
-                                language={language}
+                                language={language || 'text'}
                                 isDark={theme === 'dark'}
                             />
                         )

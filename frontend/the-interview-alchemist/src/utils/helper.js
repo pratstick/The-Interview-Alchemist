@@ -8,6 +8,12 @@ export const FALLBACK_AVATAR = "https://picsum.photos/200";
 // an absolute http://localhost:8000/... URL — both are handled here.
 export const getProfileImageUrl = (url) => {
   if (!url) return FALLBACK_AVATAR;
+  // Fall back to default avatar if legacy URL points to localhost while in production
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    if (url.includes('localhost') || url.includes('127.0.0.1')) {
+      return FALLBACK_AVATAR;
+    }
+  }
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   return `${BASE_URL}${url}`;
 };

@@ -18,7 +18,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { UserContext } from "../../context/UserContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { getProfileImageUrl } from "../../utils/helper";
+import { getProfileImageUrl, FALLBACK_AVATAR } from "../../utils/helper";
 import toast from "react-hot-toast";
 
 // ── Stat card ────────────────────────────────────────────────────────────────
@@ -223,6 +223,7 @@ const UserProfile = () => {
           <img
             src={getProfileImageUrl(user?.profileImageUrl)}
             alt="Profile"
+            onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = FALLBACK_AVATAR; }}
             className="w-20 h-20 rounded-full border-4 border-amber-200 dark:border-amber-600/50 object-cover shadow"
           />
           <div className="flex-1 text-center sm:text-left">
