@@ -39,8 +39,12 @@ axiosInstance.interceptors.response.use(
     (error) => {
         // Handle the error
         if (error.response && error.response.status === 401) {
-            // If the token is expired or invalid, redirect to login
-            window.location.href = '/';
+            // A 401 on initial profile check simply means the visitor is not logged in.
+            // Never trigger a page reload if already on the landing page or checking profile.
+            const isProfileCheck = error.config?.url?.includes('/api/auth/profile');
+            if (!isProfileCheck && window.location.pathname !== '/') {
+                window.location.href = '/';
+            }
         }
         else if (error.response && error.response.status === 429) {
             console.warn('Rate limit reached. Please slow down and try again later.');
