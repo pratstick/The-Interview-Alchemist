@@ -181,10 +181,10 @@ const InterviewPrep = () => {
           </section>
         ) : errorMsg ? (
           <section className="flex flex-col items-center justify-center py-16" aria-live="polite">
-            <LuCircleAlert className="text-4xl text-error-500 mb-2" />
-            <p className="text-error-600 mb-2">{errorMsg}</p>
+            <LuCircleAlert className="text-4xl text-red-500 mb-2" />
+            <p className="text-red-600 dark:text-red-400 mb-2">{errorMsg}</p>
             <button
-              className="bg-blue-600 text-white px-4 py-2 rounded min-w-[120px]"
+              className="bg-primary text-white px-4 py-2 rounded min-w-[120px]"
               onClick={fetchSessionDetailsbyId}
               aria-label="Retry loading session"
             >
@@ -200,7 +200,7 @@ const InterviewPrep = () => {
             />
             <p className="text-gray-500 dark:text-gray-400 mb-2">No questions found for this session.</p>
             <button
-              className="bg-blue-600 text-white px-4 py-2 rounded min-w-[120px]"
+              className="bg-primary text-white px-4 py-2 rounded min-w-[120px]"
               onClick={uploadMoreQuestions}
               aria-label="Generate Questions"
             >
@@ -210,7 +210,7 @@ const InterviewPrep = () => {
         ) : (
           <section className='grid grid-cols-12 gap-4 sm:gap-6 mt-6 mb-12'>
             <div
-              className={`col-span-12 ${openLeanMoreDrawer ? "md:col-span-7" : "md:col-span-9"}`}
+              className={`col-span-12 ${openLeanMoreDrawer ? "md:col-span-7" : "md:col-span-12"} transition-all duration-300`}
             >
               <AnimatePresence>
                 {sessionData?.questions?.map((data, index) => (
@@ -223,29 +223,27 @@ const InterviewPrep = () => {
                       duration: 0.3,
                       type: "spring",
                       stiffness: 100,
-                      delay: index * 0.1,
+                      delay: index * 0.05,
                       damping: 15,
                     }}
                     layout
                     layoutId={`question-${data._id || index}`}
-                    className="mb-6"
+                    className="mb-3"
                     tabIndex={0}
                   >
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 md:p-3 transition hover:shadow-lg dark:shadow-gray-900">
-                      <QuestionCard
-                        question={data?.question || ""}
-                        answer={data?.answer || ""}
-                        onLearnMore={e => generateConceptExplanation(data.question, e?.target)}
-                        isPinned={data?.isPinned || false}
-                        onTogglePin={() => {
-                          toggleQuestionPinStatus(data._id);
-                        }}
-                      />
-                    </div>
+                    <QuestionCard
+                      question={data?.question || ""}
+                      answer={data?.answer || ""}
+                      onLearnMore={e => generateConceptExplanation(data.question, e?.target)}
+                      isPinned={data?.isPinned || false}
+                      onTogglePin={() => {
+                        toggleQuestionPinStatus(data._id);
+                      }}
+                    />
                     {!isLoading && sessionData?.questions?.length === index + 1 && (
                       <div className='flex items-center justify-center mt-4'>
                         <button
-                          className='w-full sm:w-auto min-w-[120px] flex items-center gap-2 text-xs text-cyan-800 dark:text-cyan-300 font-medium bg-cyan-50 dark:bg-cyan-900/30 px-3 py-2 rounded text-nowrap border border-cyan-100 dark:border-cyan-800 hover:border-cyan-200 dark:hover:border-cyan-700 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 cursor-pointer'
+                          className='w-full sm:w-auto min-w-[140px] flex items-center justify-center gap-2 text-xs text-cyan-800 dark:text-cyan-300 font-medium bg-cyan-50 dark:bg-cyan-900/30 px-4 py-2.5 rounded-lg border border-cyan-200 dark:border-cyan-800 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 cursor-pointer shadow-sm transition-colors'
                           disabled={isUpdateLoader || isLoading}
                           onClick={uploadMoreQuestions}
                           aria-label="Add More Questions"
@@ -255,7 +253,7 @@ const InterviewPrep = () => {
                           ) : (
                             <>
                               <LuListCollapse />
-                              <span className='hidden md:block'>Add More Questions</span>
+                              <span>Add More Questions</span>
                             </>
                           )}
                         </button>
@@ -272,13 +270,13 @@ const InterviewPrep = () => {
         <Drawer 
           isOpen={openLeanMoreDrawer}
           onClose={() => setOpenLeanMoreDrawer(false)}
-          title={isLoading ? <SkeletonLoader /> : (explanation?.title || "")}
+          title={isLoading ? "Generating Explanation..." : (explanation?.title || "Concept Explanation")}
           role="dialog"
           aria-modal="true"
         >
           {errorMsg && (
-            <p className='text-error-600 text-sm font-semibold mb-4 flex items-center' aria-live="polite">
-              <LuCircleAlert className='inline-block mr-2 text-error-500' />
+            <p className='text-red-500 text-sm font-semibold mb-4 flex items-center' aria-live="polite">
+              <LuCircleAlert className='inline-block mr-2 text-red-500' />
               {errorMsg}
             </p>
           )}

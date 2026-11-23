@@ -13,68 +13,75 @@ const SummaryCard = ({
   onSelect,
   onDelete
 }) => {
+  const bgStyle = typeof colors === 'string' ? colors : colors?.bgcolor;
+
   return (
     <div 
-      className={`bg-white dark:bg-gray-800 border border-gray-300/40 dark:border-gray-700/40 rounded-xl p-2 overflow-hidden cursor-pointer hover:shadow-xl shadow-gray-100 dark:shadow-gray-900 relative group`} 
+      className="bg-white dark:bg-gray-800 border border-gray-200/80 dark:border-gray-700/80 rounded-xl p-3 overflow-hidden cursor-pointer hover:shadow-lg dark:hover:shadow-gray-900/50 transition-all duration-200 relative group flex flex-col justify-between" 
       onClick={onSelect}
     >
       {/* Header Section */}
-      <div className='rounded-lg p-4 relative' style={{ background: colors.bgcolor }}>
-        <div className='flex items-start'>
-          {/* Avatar Circle */}
-          <div className='flex-shrink-0 w-12 h-12 bg-white rounded-md flex items-center justify-center mr-4'>
-            <span className='text-lg font-semibold text-black'>
+      <div 
+        className="rounded-lg p-4 relative border border-black/5 dark:border-white/5 dark:!bg-none dark:bg-gray-750"
+        style={{ background: bgStyle }}
+      >
+        <div className="flex items-start">
+          {/* Avatar Square */}
+          <div className="flex-shrink-0 w-11 h-11 bg-white/90 dark:bg-gray-700 rounded-lg flex items-center justify-center mr-3.5 shadow-sm border border-black/5 dark:border-white/10">
+            <span className="text-base font-bold text-gray-800 dark:text-gray-100">
               {getInitials(role)}
             </span>
           </div>
 
           {/* Content Container */}
-          <div className='flex-grow'>
-            <div className='flex items-start justify-between'>
-              <div>
-                <h2 className='text-[17px] font-medium text-gray-900'>{role}</h2>
-                <p className='text-xs text-gray-900'>{topicsToFocus}</p>
-              </div>                    
-            </div>
+          <div className="flex-grow min-w-0 pr-6">
+            <h2 className="text-[16px] font-semibold text-gray-900 dark:text-gray-100 truncate">{role}</h2>
+            <p className="text-xs text-gray-600 dark:text-gray-300 truncate mt-0.5">{topicsToFocus}</p>
           </div>
         </div>
 
         {/* Delete Button */}
         <button 
-          className='hidden group-hover:flex items-center gap-2 text-xs text-rose-500 font-medium bg-rose-50 px-3 py-1 rounded text-nowrap border border-rose-100 hover:border-rose-200 hover:bg-rose-100 absolute top-0 right-0'
+          className="opacity-0 group-hover:opacity-100 focus:opacity-100 flex items-center justify-center w-7 h-7 text-rose-500 hover:text-rose-600 bg-white/90 dark:bg-gray-800 rounded-md border border-rose-200/60 dark:border-rose-900/40 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-opacity absolute top-3 right-3 shadow-sm cursor-pointer"
+          title="Delete session"
+          aria-label="Delete session"
           onClick={(e) => {
-            e.stopPropagation()
-            onDelete()
+            e.stopPropagation();
+            onDelete();
           }}
         >
-          <LuTrash2 />
+          <LuTrash2 size={13} />
         </button>
       </div>
 
       {/* Footer Section */}
-      <div className='px-3 pb-3'>
+      <div className="px-1 pt-3 pb-1">
         {/* Stats Chips */}
-        <div className='flex items-center gap-3 mt-4'>
-          <div className='text-[10px] font-medium text-black dark:text-gray-200 px-3 py-1 border-[0.5px] border-gray-900 dark:border-gray-600 rounded-full'>
-            Experience: {experience} {experience > 1 ? "years" : "year"}
-          </div> 
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-[10px] font-medium text-gray-600 dark:text-gray-300 px-2.5 py-0.5 bg-gray-100 dark:bg-gray-700/60 border border-gray-200 dark:border-gray-600 rounded-full">
+            Exp: {experience} {experience === "1" || experience === 1 ? "yr" : "yrs"}
+          </span> 
 
-          <div className='text-[10px] font-medium text-black dark:text-gray-200 px-3 py-1 border-[0.5px] border-gray-900 dark:border-gray-600 rounded-full'>
-            {questions} Q&A
-          </div>
+          <span className="text-[10px] font-medium text-gray-600 dark:text-gray-300 px-2.5 py-0.5 bg-gray-100 dark:bg-gray-700/60 border border-gray-200 dark:border-gray-600 rounded-full">
+            {questions} Q&amp;A
+          </span>
 
-          <div className='text-[10px] font-medium text-black dark:text-gray-200 px-3 py-1 border-[0.5px] border-gray-900 dark:border-gray-600 rounded-full'>
-            Last Updated: {lastUpdated}
-          </div>
+          {lastUpdated && (
+            <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 px-2.5 py-0.5 bg-gray-50 dark:bg-gray-700/30 border border-gray-200/60 dark:border-gray-700 rounded-full">
+              {lastUpdated}
+            </span>
+          )}
         </div>
 
         {/* Description */}
-        <div className='text-[12px] text-gray-500 dark:text-gray-400 font-medium line-clamp-2 mt-3'>
-          <p>{description}</p>
-        </div>
+        {description && (
+          <p className="text-[12px] text-gray-500 dark:text-gray-300 font-normal line-clamp-2 mt-2.5 leading-relaxed">
+            {description}
+          </p>
+        )}
       </div>
     </div>                       
-  )
+  );
 };
 
 export default SummaryCard;

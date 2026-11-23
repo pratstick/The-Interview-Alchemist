@@ -17,18 +17,15 @@ exports.createSession = async (req, res) => {
             user: userId,
         });
 
-        const questionDocs = await Promise.all(
-            questions.map(async (q) => {
-                const question = await Question.create({
-                    question: q.question,
-                    answer: q.answer,
-                    session: session._id,
-                });
-                return question._id;
-            })
+        const questionDocs = await Question.insertMany(
+            questions.map((q) => ({
+                question: q.question,
+                answer: q.answer,
+                session: session._id,
+            }))
         );
 
-        session.questions = questionDocs;
+        session.questions = questionDocs.map((q) => q._id);
         await session.save();
 
         res.status(201).json({ success: true, session });

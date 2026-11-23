@@ -4,12 +4,11 @@ import { UserContext } from '../../context/UserContext';
 import { getProfileImageUrl } from '../../utils/helper';
 
 const ProfileInfoCard = () => {
-    const { user, clearUser } = useContext(UserContext);
+    const { user, logoutUser } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        localStorage.clear();
-        clearUser();
+    const handleLogout = async () => {
+        await logoutUser();
         navigate("/");
     };
 

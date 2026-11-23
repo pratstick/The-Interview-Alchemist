@@ -34,4 +34,8 @@ yarn-error.log*
 # System Files
 Thumbs.db
 ehthumbs.db
-Desktop.ininode_modules/
+Desktop.ini
+
+# Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep

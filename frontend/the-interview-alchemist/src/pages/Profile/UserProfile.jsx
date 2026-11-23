@@ -23,11 +23,11 @@ import toast from "react-hot-toast";
 
 // ── Stat card ────────────────────────────────────────────────────────────────
 const StatCard = ({ icon, label, value, accent }) => (
-  <div className="bg-white rounded-xl p-5 shadow border border-amber-100 flex items-center gap-4">
+  <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-amber-100/80 dark:border-gray-700/80 flex items-center gap-4 transition-colors">
     <div className={`rounded-full p-3 ${accent}`}>{icon}</div>
     <div>
-      <div className="text-2xl font-bold text-gray-900">{value ?? "—"}</div>
-      <div className="text-xs text-gray-500 font-medium">{label}</div>
+      <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{value ?? "—"}</div>
+      <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">{label}</div>
     </div>
   </div>
 );
@@ -37,13 +37,13 @@ const AchievementBadge = ({ icon, title, description, earned }) => (
   <div
     className={`flex flex-col items-center gap-2 p-4 rounded-xl border text-center transition-all ${
       earned
-        ? "bg-amber-50 border-amber-200 shadow-sm"
-        : "bg-gray-50 border-gray-200 opacity-50 grayscale"
+        ? "bg-amber-50/80 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800/50 shadow-sm"
+        : "bg-gray-50/60 dark:bg-gray-800/40 border-gray-200 dark:border-gray-700/60 opacity-40 grayscale"
     }`}
   >
     <span className="text-3xl">{icon}</span>
-    <p className="text-sm font-semibold text-gray-800">{title}</p>
-    <p className="text-xs text-gray-500">{description}</p>
+    <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{title}</p>
+    <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{description}</p>
     {earned && (
       <span className="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full font-medium">
         Earned ✓
@@ -71,15 +71,15 @@ const GoalEditor = ({ goals, onSave }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow border border-amber-100 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-amber-100/80 dark:border-gray-700/80 p-6 transition-colors">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
           <LuTarget className="text-amber-500" /> Goals
         </h2>
         {!editing ? (
           <button
             onClick={() => setEditing(true)}
-            className="flex items-center gap-1 text-sm text-amber-600 hover:text-amber-700 font-medium"
+            className="flex items-center gap-1 text-sm text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium cursor-pointer"
           >
             <LuPencil size={14} /> Edit
           </button>
@@ -87,13 +87,13 @@ const GoalEditor = ({ goals, onSave }) => {
           <div className="flex gap-2">
             <button
               onClick={handleSave}
-              className="flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+              className="flex items-center gap-1 text-sm text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 font-medium cursor-pointer"
             >
               <LuCheck size={14} /> Save
             </button>
             <button
               onClick={() => setEditing(false)}
-              className="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 font-medium"
+              className="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 font-medium cursor-pointer"
             >
               <LuX size={14} /> Cancel
             </button>
@@ -104,7 +104,7 @@ const GoalEditor = ({ goals, onSave }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Daily session goal */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500 font-medium">
+          <label className="text-xs text-gray-500 dark:text-gray-400 font-medium">
             Daily Session Goal
           </label>
           {editing ? (
@@ -114,12 +114,12 @@ const GoalEditor = ({ goals, onSave }) => {
               max={10}
               value={daily}
               onChange={(e) => setDaily(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 w-28"
+              className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 w-28"
             />
           ) : (
-            <p className="text-xl font-bold text-gray-800">
+            <p className="text-xl font-bold text-gray-800 dark:text-gray-200">
               {goals?.dailySessionGoal ?? 1}{" "}
-              <span className="text-sm font-normal text-gray-500">
+              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                 session{goals?.dailySessionGoal !== 1 ? "s" : ""}
               </span>
             </p>
@@ -128,7 +128,7 @@ const GoalEditor = ({ goals, onSave }) => {
 
         {/* Weekly question goal */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500 font-medium">
+          <label className="text-xs text-gray-500 dark:text-gray-400 font-medium">
             Weekly Question Goal
           </label>
           {editing ? (
@@ -138,12 +138,12 @@ const GoalEditor = ({ goals, onSave }) => {
               max={200}
               value={weekly}
               onChange={(e) => setWeekly(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 w-28"
+              className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 w-28"
             />
           ) : (
-            <p className="text-xl font-bold text-gray-800">
+            <p className="text-xl font-bold text-gray-800 dark:text-gray-200">
               {goals?.weeklyQuestionGoal ?? 10}{" "}
-              <span className="text-sm font-normal text-gray-500">
+              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                 question{goals?.weeklyQuestionGoal !== 1 ? "s" : ""}
               </span>
             </p>
@@ -159,19 +159,19 @@ const ProgressBar = ({ label, value, target, color }) => {
   const pct = target > 0 ? Math.min(100, Math.round((value / target) * 100)) : 0;
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex justify-between text-xs text-gray-600">
+      <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 font-medium">
         <span>{label}</span>
         <span>
           {value} / {target}
         </span>
       </div>
-      <div className="w-full bg-gray-100 rounded-full h-2">
+      <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
         <div
           className={`h-2 rounded-full transition-all ${color}`}
           style={{ width: `${pct}%` }}
         />
       </div>
-      <p className="text-xs text-gray-400 text-right">{pct}%</p>
+      <p className="text-xs text-gray-400 dark:text-gray-500 text-right">{pct}%</p>
     </div>
   );
 };
@@ -219,24 +219,24 @@ const UserProfile = () => {
     <DashboardLayout>
       <div className="max-w-5xl mx-auto py-8 px-4">
         {/* ── Profile header ── */}
-        <div className="bg-white rounded-2xl shadow border border-amber-100 p-6 mb-8 flex flex-col sm:flex-row items-center sm:items-start gap-5">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-amber-100/80 dark:border-gray-700/80 p-6 mb-8 flex flex-col sm:flex-row items-center sm:items-start gap-5 transition-colors">
           <img
             src={getProfileImageUrl(user?.profileImageUrl)}
             alt="Profile"
-            className="w-20 h-20 rounded-full border-4 border-amber-200 object-cover shadow"
+            className="w-20 h-20 rounded-full border-4 border-amber-200 dark:border-amber-600/50 object-cover shadow"
           />
           <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {user?.name || "User"}
             </h1>
-            <p className="text-sm text-gray-500 mt-1">{user?.email}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{user?.email}</p>
             <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-3">
               {stats?.currentStreak > 0 && (
-                <span className="flex items-center gap-1 bg-orange-100 text-orange-600 text-xs font-semibold px-3 py-1 rounded-full">
+                <span className="flex items-center gap-1 bg-orange-100 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 text-xs font-semibold px-3 py-1 rounded-full border border-orange-200/60 dark:border-orange-800/40">
                   <LuFlame size={13} /> {stats.currentStreak}-day streak
                 </span>
               )}
-              <span className="flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">
+              <span className="flex items-center gap-1 bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold px-3 py-1 rounded-full border border-amber-200/60 dark:border-amber-800/40">
                 <LuTrophy size={13} /> {earnedCount} / {achievements.length}{" "}
                 achievements
               </span>
@@ -245,80 +245,80 @@ const UserProfile = () => {
         </div>
 
         {/* ── Stats grid ── */}
-        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
           <LuStar className="text-amber-500" /> Study Statistics
         </h2>
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8 animate-pulse">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="bg-gray-100 rounded-xl h-24" />
+              <div key={i} className="bg-gray-100 dark:bg-gray-800 rounded-xl h-24" />
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
             <StatCard
-              icon={<LuBriefcase className="text-amber-600 text-xl" />}
+              icon={<LuBriefcase className="text-amber-600 dark:text-amber-400 text-xl" />}
               label="Total Sessions"
               value={stats?.totalSessions}
-              accent="bg-amber-100"
+              accent="bg-amber-100 dark:bg-amber-950/50"
             />
             <StatCard
-              icon={<LuMessageSquare className="text-blue-500 text-xl" />}
+              icon={<LuMessageSquare className="text-blue-500 dark:text-blue-400 text-xl" />}
               label="Total Q&A"
               value={stats?.totalQuestions}
-              accent="bg-blue-100"
+              accent="bg-blue-100 dark:bg-blue-950/50"
             />
             <StatCard
-              icon={<LuPin className="text-rose-500 text-xl" />}
+              icon={<LuPin className="text-rose-500 dark:text-rose-400 text-xl" />}
               label="Pinned Qs"
               value={stats?.pinnedQuestions}
-              accent="bg-rose-100"
+              accent="bg-rose-100 dark:bg-rose-950/50"
             />
             <StatCard
-              icon={<LuFileText className="text-violet-500 text-xl" />}
+              icon={<LuFileText className="text-violet-500 dark:text-violet-400 text-xl" />}
               label="Notes Added"
               value={stats?.questionsWithNotes}
-              accent="bg-violet-100"
+              accent="bg-violet-100 dark:bg-violet-950/50"
             />
             <StatCard
-              icon={<LuCalendarDays className="text-emerald-500 text-xl" />}
+              icon={<LuCalendarDays className="text-emerald-500 dark:text-emerald-400 text-xl" />}
               label="This Week"
               value={stats?.sessionsThisWeek}
-              accent="bg-emerald-100"
+              accent="bg-emerald-100 dark:bg-emerald-950/50"
             />
             <StatCard
-              icon={<LuCalendarDays className="text-teal-500 text-xl" />}
+              icon={<LuCalendarDays className="text-teal-500 dark:text-teal-400 text-xl" />}
               label="This Month"
               value={stats?.sessionsThisMonth}
-              accent="bg-teal-100"
+              accent="bg-teal-100 dark:bg-teal-950/50"
             />
             <StatCard
-              icon={<LuFlame className="text-orange-500 text-xl" />}
+              icon={<LuFlame className="text-orange-500 dark:text-orange-400 text-xl" />}
               label="Current Streak"
               value={
                 stats?.currentStreak
                   ? `${stats.currentStreak}d`
                   : "0d"
               }
-              accent="bg-orange-100"
+              accent="bg-orange-100 dark:bg-orange-950/50"
             />
             <StatCard
-              icon={<LuTrophy className="text-yellow-500 text-xl" />}
+              icon={<LuTrophy className="text-yellow-500 dark:text-yellow-400 text-xl" />}
               label="Best Streak"
               value={
                 stats?.longestStreak
                   ? `${stats.longestStreak}d`
                   : "0d"
               }
-              accent="bg-yellow-100"
+              accent="bg-yellow-100 dark:bg-yellow-950/50"
             />
           </div>
         )}
 
         {/* ── Weekly progress vs goals ── */}
         {!loading && goals && (
-          <div className="bg-white rounded-xl shadow border border-amber-100 p-6 mb-8">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-amber-100/80 dark:border-gray-700/80 p-6 mb-8 transition-colors">
+            <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
               <LuTarget className="text-amber-500" /> This Week's Progress
             </h2>
             <div className="flex flex-col gap-4">
@@ -346,16 +346,16 @@ const UserProfile = () => {
         )}
 
         {/* ── Achievements ── */}
-        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
           <LuTrophy className="text-amber-500" /> Achievements{" "}
-          <span className="text-sm font-normal text-gray-500">
+          <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
             ({earnedCount}/{achievements.length})
           </span>
         </h2>
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 animate-pulse">
             {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="bg-gray-100 rounded-xl h-32" />
+              <div key={i} className="bg-gray-100 dark:bg-gray-800 rounded-xl h-32" />
             ))}
           </div>
         ) : (

@@ -75,6 +75,13 @@ exports.updateQuestionNotes = async (req, res) => {
         if (!question) {
             return res.status(404).json({ success: false, message: 'Question not found' });
         }
+
+        // Verify that the session owning this question belongs to the requesting user
+        const session = await Session.findById(question.session);
+        if (!session || session.user.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ success: false, message: 'Not authorized to modify this question' });
+        }
+
         question.note = notes || "";
         await question.save();
         res.status(200).json({ success: true, question });

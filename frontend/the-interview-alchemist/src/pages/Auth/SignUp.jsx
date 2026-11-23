@@ -121,7 +121,7 @@ const SignUp = ({ setCurrentPage }) => {
 
         <button 
           type='submit' 
-          className={`w-full py-3 px-4 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors flex justify-center items-center ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
+          className={`w-full py-3 px-4 bg-primary hover:bg-amber-600 text-white font-medium rounded-lg transition-colors flex justify-center items-center ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
           disabled={isLoading}
         >
           {isLoading ? (
@@ -141,7 +141,7 @@ const SignUp = ({ setCurrentPage }) => {
           Already have an account?{' '}
           <button 
             type="button"
-            className="font-medium text-primary hover:text-primary-dark cursor-pointer hover:underline focus:outline-none"
+            className="font-medium text-primary hover:text-amber-600 cursor-pointer hover:underline focus:outline-none"
             onClick={() => setCurrentPage("login")}
           >
             Login

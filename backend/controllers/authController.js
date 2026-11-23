@@ -132,11 +132,12 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-// @desc Logout user (clear cookie)
+// @desc Logout user (clear cookies)
 // @route POST /api/auth/logout
 // @access Private
 const logoutUser = (req, res) => {
     res.clearCookie('token', { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' });
+    res.clearCookie('csrf-token', { httpOnly: false, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' });
     res.status(200).json({ message: 'Logged out successfully' });
 };
 
